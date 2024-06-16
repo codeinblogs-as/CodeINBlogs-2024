@@ -23,7 +23,7 @@ export function GridPattern({
   x = -1,
   y = -1,
   strokeDasharray = 0,
-  numSquares = 50,
+  numSquares = 60,
   className,
   maxOpacity = 0.5,
   duration = 4,

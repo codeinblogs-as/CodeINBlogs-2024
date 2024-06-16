@@ -56,15 +56,7 @@ export const BoxReveal = ({
         initial="hidden"
         animate={slideControls}
         transition={{ duration: duration ? duration : 0.5, ease: "easeIn" }}
-        style={{
-          position: "absolute",
-          top: 4,
-          bottom: 4,
-          left: 0,
-          right: 0,
-          zIndex: 20,
-          background: boxColor ? boxColor : "#5046e6",
-        }}
+        className="absolute top-1 bottom-1 left-0 right-0 z-20 rounded-md bg-gradient-to-r from-[#212a37]/50 to-[#313042]/50 backdrop-blur-6xl bg-opacity-50"
       />
     </div>
   );

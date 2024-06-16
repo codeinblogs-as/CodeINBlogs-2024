@@ -41,7 +41,7 @@ const logos = [
   
   const PartnersLogo = () => {
     return (
-        <div className="w-full my-4">
+        <div className="w-full mt-6">
         <div className="mx-auto w-full px-4 md:px-8">
           <div
             className="group relative flex gap-6 overflow-hidden"
@@ -61,7 +61,7 @@ const logos = [
                     <img
                       key={key}
                       src={logo.url}
-                      className="h-10 w-28 px-2 brightness-0 invert"
+                      className="h-10 w-auto px-2 brightness-0 invert"
                       alt={`${logo.name}`}
                     />
                   ))}
