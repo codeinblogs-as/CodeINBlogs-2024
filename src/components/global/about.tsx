@@ -30,10 +30,7 @@ const WhoWeAre = () => {
                         <div className="relative rounded-2xl overflow-hidden w-full">
                             <Image
                                 src={AboutImg}
-                                width={1000} // Adjust this value to match your desired height in pixels
-                                height={300}
-                                className="px-2 brightness-0 invert"
-                                alt='logo'
+                                width={0} height={0} sizes="100vw" className="image" alt='logo'
                             />
                             <div className="absolute inset-0 bg-gradient-to-b from-[#483D8B]/35 to-[#FFB6C1]/35 opacity-20 hover:opacity-0 transition duration-300"></div>
                         </div>
