@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import Navbar from "@/components/global/Navbar";
 import AnimatedGradientText from "@/components/ui/animated-gradient-text";
 import { cn } from "@/lib/utils";
@@ -11,9 +12,11 @@ import GridPattern from "@/components/ui/animated-grid-pattern";
 import { BorderBeam } from "@/components/ui/border-beam";
 import PartnersLogo from "@/components/global/PartnersLogo";
 import HowUnique from "@/components/global/unique";
+import WhoWeAre from "@/components/global/about";
 export default async function Home() {
   return (
     <div>
+      <SpeedInsights></SpeedInsights>
       <main className="flex items-center justify-center overflow-hidden flex-col gap-10 md:mx-28">
         <Navbar />
         <GridPattern
@@ -50,7 +53,7 @@ export default async function Home() {
             <span className="text-[#222238]">.</span>
 
           </h2>
-          <Link href="/workflows" className="flex overflow-hidden rounded-full">
+          <Link href="#" className="flex overflow-hidden rounded-full">
             <AnimatedGradientText className="m-2">
               <span
                 className={cn(
@@ -104,6 +107,7 @@ export default async function Home() {
         </section>
       </main>
       <HowUnique />
+      <WhoWeAre/>
     </div>
   );
 }
