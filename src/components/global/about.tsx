@@ -30,7 +30,7 @@ const WhoWeAre = () => {
                         <div className="relative rounded-2xl overflow-hidden w-full">
                             <Image
                                 src={AboutImg}
-                                width={500} // Adjust this value to match your desired height in pixels
+                                width={800} // Adjust this value to match your desired height in pixels
                                 height={300}
                                 className="px-2 brightness-0 invert"
                                 alt='logo'
