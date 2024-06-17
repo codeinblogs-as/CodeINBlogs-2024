@@ -32,7 +32,7 @@ const WhoWeAre = () => {
                                 src={AboutImg}
                                 width={0} height={0} sizes="100vw" className="image" alt='logo'
                             />
-                            <div className="absolute inset-0 bg-gradient-to-b from-[#483D8B]/35 to-[#FFB6C1]/35 opacity-20 hover:opacity-0 transition duration-300"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-[#483D8B]/45 to-[#FFB6C1]/45 opacity-20 hover:opacity-0 transition duration-300"></div>
                         </div>
                     </div>
                 </div>
