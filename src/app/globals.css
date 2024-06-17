@@ -9,6 +9,8 @@
 }
 
 body {
+    font-family: 'GeistSans', inter;
+  
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
