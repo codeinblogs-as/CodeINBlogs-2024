@@ -27,3 +27,12 @@ body {
 }
 
 
+.about-bg{
+background-image: url("https://t3.ftcdn.net/jpg/05/79/72/30/360_F_579723027_r9zlbEuccTOihF6tSYIYxhhZXdYIPNr5.jpg");
+background-size: cover;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}

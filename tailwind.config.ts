@@ -14,8 +14,10 @@ const config: Config = {
       },
       animation: {
         gradient: "gradient 8s linear infinite",
-        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
-        "logo-cloud": "logo-cloud 30s linear infinite", // New animation utility
+        "border-beam": "border-beam calc(var(--duration) * 1s) infinite linear",
+        "logo-cloud": "logo-cloud 30s linear infinite",
+        "spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
+        slide: "slide var(--speed) ease-in-out infinite alternate",
       },
       keyframes: {
         gradient: {
@@ -25,16 +27,34 @@ const config: Config = {
         },
         "border-beam": {
           "100%": {
-            "offset-distance": "100%",
+            offsetDistance: "100%",
           },
         },
-        "logo-cloud": { 
-          
+        "logo-cloud": {
           from: {
             transform: "translateX(0)",
           },
           to: {
             transform: "translateX(calc(-100% - 4rem))",
+          },
+        },
+        "spin-around": {
+          "0%": {
+            transform: "translateZ(0) rotate(0)",
+          },
+          "15%, 35%": {
+            transform: "translateZ(0) rotate(90deg)",
+          },
+          "65%, 85%": {
+            transform: "translateZ(0) rotate(270deg)",
+          },
+          "100%": {
+            transform: "translateZ(0) rotate(360deg)",
+          },
+        },
+        slide: {
+          to: {
+            transform: "translate(calc(100vw - 100%), 0)",
           },
         },
       },

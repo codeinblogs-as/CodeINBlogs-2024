@@ -1,4 +1,4 @@
-
+import Image from "next/image"
 const logos = [
     {
       name: 'Vercel',
@@ -58,7 +58,7 @@ const logos = [
                   className="flex shrink-0 animate-logo-cloud flex-row justify-around gap-6"
                 >
                   {logos.map((logo, key) => (
-                    <img
+                    <Image
                       key={key}
                       src={logo.url}
                       className="h-10 w-auto px-2 brightness-0 invert"
