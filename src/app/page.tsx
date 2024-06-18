@@ -13,6 +13,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 import PartnersLogo from "@/components/global/PartnersLogo";
 import HowUnique from "@/components/global/unique";
 import WhoWeAre from "@/components/global/about";
+import UpcommingHappenings from "@/components/global/UpcommingHappenings";
 export default async function Home() {
   return (
     <div>
@@ -108,6 +109,7 @@ export default async function Home() {
       </main>
       <HowUnique />
       <WhoWeAre/>
+      <UpcommingHappenings/>
     </div>
   );
 }
