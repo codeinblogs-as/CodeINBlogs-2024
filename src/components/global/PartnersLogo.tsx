@@ -60,6 +60,8 @@ const logos = [
                   {logos.map((logo, key) => (
                     <Image
                       key={key}
+                      width={50}
+                      height={20}
                       src={logo.url}
                       className="h-10 w-auto px-2 brightness-0 invert"
                       alt={`${logo.name}`}
