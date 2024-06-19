@@ -11,7 +11,7 @@ const UpcomingHappenings = () => {
                     Upcoming Happenings
                 </h2>
                 <p className="text-base md:text-lg text-center text-slate-100 mb-4">
-                Our Exciting Lineup of Live Sessions, Hackathons, Bootcamps, and More!
+                    Our Exciting Lineup of Live Sessions, Hackathons, Bootcamps, and More!
                 </p>
                 <div className='flex justify-center'>
                     <div className="relative max-w-[900px] py-8 md:py-[38px] px-4 md:px-[75px] w-full happening-card border border-[#323232]/50 bg-opacity-20 py-10 px-6 backdrop-blur-3xl rounded-lg text-white shadow-lg">
@@ -21,12 +21,12 @@ const UpcomingHappenings = () => {
                         <div className="block md:hidden absolute bottom-0 right-0 px-2 py-1 rounded-tl-lg rounded-br-lg border-t-[1px] border-l-[1px] border-[#131215] bg-[#06040c]/70 text-[#e1e1e4]/80">Event Type</div>
                         <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-8">
                             <div className="w-full md:w-2/3">
-                                <div className="text-4xl text-slate-100 font-semibold leading-tight">Here we'll add the event name</div>
+                                <div className="text-4xl text-slate-100 font-semibold leading-tight">Here we&apos;ll add the event name</div>
                                 <div className="pt-3 text-base text-zinc-200 opacity-90">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt vel, eaque cupiditate tempore hic doloremque dignissimos optio expedita blanditiis at...</div>
                                 <div className="py-8 grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <div className="font-light">Date & Time</div>
-                                        <div className="font-medium">18th June 2024 & 5PM</div>
+                                        <div className="font-light">Date &amp; Time</div>
+                                        <div className="font-medium">18th June 2024 &amp; 5PM</div>
                                     </div>
                                     <div className="flex">
                                         <button className="group relative m-1 inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-gray-700 bg-gradient-to-tr from-[#12111d] to-[#483D8B]/50 px-4 py-1 text-white shadow-lg transition duration-100 ease-in-out active:translate-y-0.5 active:border-gray-800 active:shadow-none">
