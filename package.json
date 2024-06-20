@@ -11,12 +11,10 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@radix-ui/react-slot": "^1.0.2",
     "@vercel/speed-insights": "^1.0.12",
     "class-variance-authority": "^0.7.0",
-    "framer-motion": "^11.2.10",
+    "clsx": "^2.1.1",
     "geist": "^1.3.0",
-    "lucide-react": "^0.394.0",
     "next": "14.2.4",
     "next-themes": "^0.3.0",
     "react": "^18",
@@ -24,11 +22,14 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@types/node": "^20.14.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
+    "eslint": "^8.57.0",
     "eslint-config-next": "14.2.4",
+    "framer-motion": "^11.2.11",
+    "lucide-react": "^0.395.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
