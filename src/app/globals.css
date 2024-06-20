@@ -40,8 +40,14 @@ background-size: cover;
 }
 
 .HappeningIMG{
-  width: 300px;
-  height: 300px;
+  width: 250px; 
+  height: 250px; 
+  border-radius: 2xl; 
+  border: 1px solid #363A42; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; 
 }
 
 .image {
