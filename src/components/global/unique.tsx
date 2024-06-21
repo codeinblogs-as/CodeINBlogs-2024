@@ -7,11 +7,11 @@ const UniqueSection = () => {
         <section className="px-8 py-4 border-t-2 border-b-2 border-gray-900 relative flex items-center justify-center backdrop-blur-3xl">
             <Image
                 src="https://tailwindcss.com/_next/static/media/docs@30.8b9a76a2.avif"
-                className="absolute z-0 top-0 left-0 w-full h-full object-cover opacity-40"
                 alt="Background image"
-                layout="fill"
-                objectFit="cover"
-                quality={50} 
+                className="absolute z-0 top-0 left-0 w-full h-full object-cover opacity-40"
+                width={650}
+                height={750}
+                quality={50}
             />
             <div className="relative z-10">
                 <div className="max-w-xl mx-auto space-y-4 p-6 text-center">

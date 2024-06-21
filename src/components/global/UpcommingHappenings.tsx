@@ -66,9 +66,10 @@ const UpcomingHappenings = () => {
                                             alt={event.name}
                                             width={250}
                                             height={250}
-                                            objectFit="cover"
                                             className="HappeningIMG rounded-2xl"
                                         />
+
+
                                     </div>
                                 </div>
                             </div>
