@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import Logo from "@/../public/CodeINBlogs.png";
 import LoginButton from './LoginButton';
+
 type NavItem = {
   name: string;
   link: string;
@@ -19,22 +20,21 @@ const Navbar: React.FC<Props> = ({ user }) => {
   const navItems: NavItem[] = [
     {
       name: 'Home',
-      link: '#',
+      link: '/',
     },
     {
       name: 'About',
-      link: '#About',
+      link: '/about',
     },
     {
       name: 'Blogs',
-      link: '#Blogs',
+      link: '/blogs',
     },
     {
       name: 'Resources',
-      link: '#Resources',
+      link: '/resources',
     },
   ];
-
   return (
     <>
       <header className='py-2 px-4 w-full bg-background/10 backdrop-blur-lg z-[100] flex items-center border-b-[1px] border-neutral-900 justify-between'>
