@@ -29,10 +29,10 @@ export default function Login() {
     const handleInput = (e: Event) => {
       const inputEvent = e as InputEvent;
       const target = e.target as HTMLInputElement;
-
+    
       if (inputEvent.inputType === undefined) {
         target.value = '';
-        toast.error("Autofill detected. Please type your information directly to ensure accuracy.", {
+        toast.error(`Autofill detected. Please type your information directly to ensure accuracy.`, {
           duration: 4000,
           position: "bottom-left",
           style: {
@@ -41,9 +41,9 @@ export default function Login() {
             color: "#fff",
           },
         });
-        
       }
     };
+    
 
     inputs.forEach((input: Element) => {
       input.addEventListener('input', handleInput);
