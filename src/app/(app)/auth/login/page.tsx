@@ -32,7 +32,7 @@ export default function Login() {
     
       if (inputEvent.inputType === undefined) {
         target.value = '';
-        toast.error("&apos;Autofill detected. Please type your information directly to ensure accuracy.&apos;", {
+        toast.error("Autofill detected. Please type your information directly to ensure accuracy.", {
           duration: 4000,
           position: "bottom-left",
           style: {
