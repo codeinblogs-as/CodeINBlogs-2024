@@ -1,11 +1,7 @@
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
 
-const TextureCardStyled = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => (
+const TextureCardStyled = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }>(({ className, children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -29,11 +25,9 @@ const TextureCardStyled = React.forwardRef<
   </div>
 ))
 
-// Allows for global css overrides and theme support - similar to shad cn
-const TextureCard = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }
->(({ className, children, ...props }, ref) => {
+TextureCardStyled.displayName = "TextureCardStyled"
+
+const TextureCard = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { children?: React.ReactNode }>(({ className, children, ...props }, ref) => {
   return (
     <div
       ref={ref}
@@ -59,10 +53,7 @@ const TextureCard = React.forwardRef<
 
 TextureCard.displayName = "TextureCard"
 
-const TextureCardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+const TextureCardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
@@ -74,10 +65,7 @@ const TextureCardHeader = React.forwardRef<
 ))
 TextureCardHeader.displayName = "TextureCardHeader"
 
-const TextureCardTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
+const TextureCardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(({ className, ...props }, ref) => (
   <h3
     ref={ref}
     className={cn(
@@ -89,10 +77,7 @@ const TextureCardTitle = React.forwardRef<
 ))
 TextureCardTitle.displayName = "TextureCardTitle"
 
-const TextureCardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
+const TextureCardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(({ className, ...props }, ref) => (
   <p
     ref={ref}
     className={cn(
@@ -104,23 +89,16 @@ const TextureCardDescription = React.forwardRef<
 ))
 TextureCardDescription.displayName = "TextureCardDescription"
 
-const TextureCardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+const TextureCardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div ref={ref} className={cn("px-6 py-4", className)} {...props} />
 ))
 TextureCardContent.displayName = "TextureCardContent"
 
-const TextureCardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+const TextureCardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
       "flex items-center justify-between px-6 py-4  gap-2",
-
       className
     )}
     {...props}
