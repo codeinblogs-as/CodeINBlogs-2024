@@ -27,14 +27,13 @@ body {
 }
 
 
-.about-bg{
+/* .about-bg{
 background-image: url("https://t3.ftcdn.net/jpg/05/79/72/30/360_F_579723027_r9zlbEuccTOihF6tSYIYxhhZXdYIPNr5.jpg");
 background-size: cover;
 }
 .happenings{
   background-image: url("https://img.freepik.com/premium-photo/abstract-background-with-some-smooth-lines-it-blue-purple_977935-6240.jpg");
-  background-size: cover;
-}
+  background-size: cover; */
 .happening-card {
   background-image: linear-gradient(150deg, #15122485, #07070d85);
 }
