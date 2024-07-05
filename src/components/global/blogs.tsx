@@ -63,7 +63,7 @@ const getRandomColor = () => {
     'bg-yellow-700/50',
     'bg-purple-700/50',
     'bg-pink-700/50',
-    'bg-indigo-700/50',
+    'bg-indigo-700/50', 
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -81,7 +81,7 @@ export default function BlogsSection() {
       <Container>
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="text-2xl md:text-4xl text-center mb-2 font-semibold tracking-tighter ">
-            <span className="bg-gradient-to-br from-indigo-400 via-indigo-300 to-indigo-700 bg-clip-text text-transparent">Blogs</span>
+            <span className="bg-gradient-to-br from-indigo-400 via-indigo-300 to-indigo-700 bg-clip-text text-transparent">Tech Blogs</span>
           </h2>
           <p className="text-base md:text-lg text-center text-slate-100 mb-4">
             Tech Blogs Written By Our Community Developers To Help Developers!
