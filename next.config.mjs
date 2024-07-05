@@ -1,7 +1,15 @@
 // next.config.mjs
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
-    domains: ["tailwindcss.com","img.freepik.com","www.antonball.dev"],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 };
 

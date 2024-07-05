@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
 const UpcomingHappenings = () => {
     const events = [
         {
@@ -20,7 +19,6 @@ const UpcomingHappenings = () => {
             eventType: "Hackathon",
             registrationLink: "https://codeinblogs.co"
         },
-        // Add more events as needed
     ];
 
     return (
@@ -32,9 +30,9 @@ const UpcomingHappenings = () => {
                 <p className="text-base md:text-lg text-center text-slate-100 mb-4">
                     Our Exciting Lineup of Live Sessions, Hackathons, Bootcamps, and More!
                 </p>
-                <div className='flex flex-col items-center'>
+                <div className='flex flex-col items-center' id=''>
                     {events.map((event, index) => (
-                        <div key={index} className="my-6 relative max-w-[900px] py-4 md:py-[32px] px-4 md:px-[75px] w-full happening-card border border-[#323232]/50 bg-opacity-20 py-3 px-6 backdrop-blur-8xl rounded-lg text-white shadow-lg">
+                        <div key={index} className="my-6 relative max-w-[900px] py-4 md:py-[32px] px-4 md:px-[75px] w-full happening-card border border-[#323232]/50 bg-opacity-20 [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl backdrop-blur-8xl rounded-lg text-white">
                             {/* Badge for large screens (laptop and desktop) */}
                             <div className="hidden md:block absolute top-0 left-0 text-white px-2 py-1 border-r-[1px] border-b-[1px] border-[#131215] bg-[#06040c]/50 text-[#e1e1e4]/70 rounded-tl-lg rounded-br-lg">{event.eventType}</div>
                             {/* Badge for mobile devices */}

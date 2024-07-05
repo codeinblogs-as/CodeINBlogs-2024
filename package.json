@@ -25,13 +25,13 @@
   },
   "devDependencies": {
     "@radix-ui/react-slot": "^1.1.0",
-    "@types/node": "^20.14.8",
+    "@types/node": "^20.14.9",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint-config-next": "14.2.4",
-    "framer-motion": "^11.2.11",
-    "lucide-react": "^0.396.0",
+    "framer-motion": "^11.2.13",
+    "lucide-react": "^0.400.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.5.3"
   }
 }
