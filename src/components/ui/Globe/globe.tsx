@@ -1,8 +1,8 @@
-"use client";
+"use client"
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import createGlobe, { COBEOptions } from "cobe";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSpring } from "react-spring";
 
 const cn = (...args: any[]) => {
@@ -14,18 +14,18 @@ const GLOBE_CONFIG: COBEOptions = {
   height: 600,
   onRender: () => {},
   devicePixelRatio: 2,
-  phi: 1.5, // Adjusted for initial position
-  theta: 0.3, // Adjusted for initial position
+  phi: 1.5,
+  theta: 0.3,
   dark: 1,
   diffuse: 0.2,
   mapSamples: 12000,
   mapBrightness: 15,
   baseColor: [18 / 255, 17 / 255, 29 / 255],
-  markerColor: [250 / 255, 251 / 255, 252 / 255], // Adjusted marker color
+  markerColor: [250 / 255, 251 / 255, 252 / 255], 
   glowColor: [129 / 255, 140 / 255, 248 / 255],
   markers: [
     {
-      location: [25.331558, 74.645722],
+      location: [25.331558, 74.645722], // Bhilwara Latitude and Longitude [lat , long]
       size: 0.050,
     },
   ],
@@ -38,12 +38,10 @@ export const Globe = ({
   className?: string;
   config?: COBEOptions;
 }) => {
-  let phi = 1.5; // Adjusted for initial position
-  let theta = 0.3; // Adjusted for initial position
+  let phi = 1.5; 
+  let theta = 0.3; 
   let width = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerInteracting = useRef(null);
-  const pointerInteractionMovement = useRef(0);
   const [{ r }, api] = useSpring(() => ({
     r: 0,
     config: {
@@ -54,29 +52,13 @@ export const Globe = ({
     },
   }));
 
-  const updatePointerInteraction = (value: any) => {
-    pointerInteracting.current = value;
-    canvasRef.current!.style.cursor = value ? "grabbing" : "grab";
+  const onRender = (state: Record<string, any>) => {
+    phi += 0.005; 
+    state.phi = phi;
+    state.theta = theta + r.get();
+    state.width = width * 2;
+    state.height = width * 2;
   };
-
-  const updateMovement = (clientX: any) => {
-    if (pointerInteracting.current !== null) {
-      const delta = clientX - pointerInteracting.current;
-      pointerInteractionMovement.current = delta;
-      api.start({ r: delta / 200 });
-    }
-  };
-
-  const onRender = useCallback(
-    (state: Record<string, any>) => {
-      if (!pointerInteracting.current) phi += 0.005;
-      state.phi = phi;
-      state.theta = theta + r.get();
-      state.width = width * 2;
-      state.height = width * 2;
-    },
-    [pointerInteracting, phi, theta, r]
-  );
 
   const onResize = () => {
     if (canvasRef.current) {
@@ -95,8 +77,11 @@ export const Globe = ({
       onRender,
     });
 
-    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 500); // Adjusted timeout for opacity
-    return () => globe.destroy();
+    setTimeout(() => (canvasRef.current!.style.opacity = "1"), 500);
+    return () => {
+      globe.destroy();
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   return (
@@ -104,11 +89,6 @@ export const Globe = ({
       <canvas
         className={cn("h-full w-full opacity-0 transition-opacity duration-500")}
         ref={canvasRef}
-        onPointerDown={(e) => updatePointerInteraction(e.clientX - pointerInteractionMovement.current)}
-        onPointerUp={() => updatePointerInteraction(null)}
-        onPointerOut={() => updatePointerInteraction(null)}
-        onMouseMove={(e) => updateMovement(e.clientX)}
-        onTouchMove={(e) => e.touches[0] && updateMovement(e.touches[0].clientX)}
       />
     </div>
   );
