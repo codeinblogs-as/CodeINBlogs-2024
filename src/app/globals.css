@@ -53,6 +53,12 @@ background-size: cover;
   width: 100%;
   height: auto;
 }
-.canvas{
-box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+.opensource {
+  background-image: url("https://img.freepik.com/free-photo/artistic-blurry-colorful-wallpaper-background_58702-8309.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.githubicon{
+  border-radius: 100%;
 }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import createGlobe, { COBEOptions } from "cobe";
@@ -14,19 +14,19 @@ const GLOBE_CONFIG: COBEOptions = {
   height: 600,
   onRender: () => {},
   devicePixelRatio: 2,
-  phi: 0,
-  theta: 0.3,
+  phi: 1.5, // Adjusted for initial position
+  theta: 0.3, // Adjusted for initial position
   dark: 1,
-  diffuse: 0.4,
-  mapSamples: 16000,
-  mapBrightness: 10,
-  baseColor: [18 / 255, 17 / 255, 29 / 255], 
-  markerColor: [67 / 255, 56 / 255, 202 / 255], 
-  glowColor: [0, 0, 0], 
+  diffuse: 0.2,
+  mapSamples: 12000,
+  mapBrightness: 15,
+  baseColor: [18 / 255, 17 / 255, 29 / 255],
+  markerColor: [250 / 255, 251 / 255, 252 / 255], // Adjusted marker color
+  glowColor: [129 / 255, 140 / 255, 248 / 255],
   markers: [
     {
       location: [25.331558, 74.645722],
-      size: 0.1,
+      size: 0.050,
     },
   ],
 };
@@ -38,7 +38,8 @@ export const Globe = ({
   className?: string;
   config?: COBEOptions;
 }) => {
-  let phi = 0;
+  let phi = 1.5; // Adjusted for initial position
+  let theta = 0.3; // Adjusted for initial position
   let width = 0;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef(null);
@@ -69,11 +70,12 @@ export const Globe = ({
   const onRender = useCallback(
     (state: Record<string, any>) => {
       if (!pointerInteracting.current) phi += 0.005;
-      state.phi = phi + r.get();
+      state.phi = phi;
+      state.theta = theta + r.get();
       state.width = width * 2;
       state.height = width * 2;
     },
-    [pointerInteracting, phi, r]
+    [pointerInteracting, phi, theta, r]
   );
 
   const onResize = () => {
