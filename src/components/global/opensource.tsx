@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const OpenSource = () => {
   return (
     <section className="relative opensource">
-    <div className="bg-gradient-to-b from-black/50 to-transparent bg-opacity-60 backdrop-filter backdrop-blur-4xl py-8 px-4 md:px-8  border-t-2 border-b-2 border-gray-900">
+    <div className="bg-gradient-to-br from-black/80 via-black/80 to-black/90 bg-opacity-60 backdrop-filter backdrop-blur-4xl py-8 px-4 md:px-8  border-t-2 border-b-2 border-gray-900">
       <div className="max-w-screen-xl mx-auto ">
         <div className="absolute top-0 left-0 w-full h-full "></div>
 
