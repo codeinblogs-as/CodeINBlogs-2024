@@ -53,6 +53,12 @@ background-size: cover;
   width: 100%;
   height: auto;
 }
-.canvas{
-box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+.opensource {
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/032/313/689/small/gradient-abstract-background-purple-blue-and-black-free-vector.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.githubicon{
+  border-radius: 100%;
 }
