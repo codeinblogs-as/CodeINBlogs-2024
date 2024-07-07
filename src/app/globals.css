@@ -9,14 +9,12 @@
 }
 
 body {
-    font-family: 'GeistSans', inter;
-  
+  font-family: 'GeistSans', inter;
+
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    ),
+      rgb(var(--background-end-rgb))),
     rgb(var(--background-start-rgb));
 }
 
@@ -27,38 +25,41 @@ body {
 }
 
 
-/* .about-bg{
+.about-bg{
 background-image: url("https://t3.ftcdn.net/jpg/05/79/72/30/360_F_579723027_r9zlbEuccTOihF6tSYIYxhhZXdYIPNr5.jpg");
 background-size: cover;
 }
-.happenings{
-  background-image: url("https://img.freepik.com/premium-photo/abstract-background-with-some-smooth-lines-it-blue-purple_977935-6240.jpg");
-  background-size: cover; */
+.happenings {
+  background-image: url("https://img.freepik.com/free-vector/dark-gradient-background-with-copy-space_53876-99548.jpg?size=626&ext=jpg&ga=GA1.1.1578960093.1718702763&semt=ais_user");
+  background-size: cover;
+}
+
 .happening-card {
   background-image: linear-gradient(150deg, #15122485, #07070d85);
 }
 
-.HappeningIMG{
-  width: 250px; 
-  height: 250px; 
-  border-radius: 2xl; 
-  border: 1px solid #363A42; 
+.HappeningIMG {
+  width: 250px;
+  height: 250px;
+  border-radius: 2xl;
+  border: 1px solid #363A42;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .image {
   width: 100%;
   height: auto;
 }
+
 .opensource {
   background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSQUMKOY5cypVLOsbwiFWkZvrrCRVkEfUxIoNyMhKGWLXNFNYR6");
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.githubicon{
+.githubicon {
   border-radius: 100%;
 }

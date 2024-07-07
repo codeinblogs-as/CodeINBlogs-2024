@@ -1,5 +1,4 @@
 import { Globe } from "../ui/Globe/globe";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const OpenSource = () => {
   return (
     <section className="relative opensource">

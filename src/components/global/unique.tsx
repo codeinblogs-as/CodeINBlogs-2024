@@ -15,7 +15,7 @@ const UniqueSection = () => {
             />
             <div className="relative z-10">
                 <div className="max-w-xl mx-auto space-y-4 p-6 text-center">
-                    <h2 className="text-2xl md:text-4xl font-semibold tracking-tighter bg-gradient-to-b bg-clip-text text-transparent from-[#483D8B] to-[#CBD5E0]">
+                    <h2 className="text-3xl font-bold md:text-4xl text-center mb-2 tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-[#5c51a8] to-[#436478]">
                         Why We&apos;re Unique
                     </h2>
                 </div>
