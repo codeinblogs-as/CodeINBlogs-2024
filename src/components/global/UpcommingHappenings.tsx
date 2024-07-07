@@ -23,8 +23,8 @@ const UpcomingHappenings = () => {
 
     return (
         <section className="happenings border-t-2 border-b-2 border-gray-900">
-            <div className="bg-[#0c0b12]/70 px-4 py-8">
-                <h2 className="text-2xl md:text-4xl text-center mb-2 font-semibold tracking-tighter bg-gradient-to-b bg-clip-text text-transparent from-[#483D8B] to-slate-400">
+            <div className=" px-4 py-8 bg-gradient-to-br from-black/60 via-black/30 to-black/20 bg-opacity-100  backdrop-blur-4xl">
+                <h2 className="text-3xl font-bold md:text-4xl text-center mb-2 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 via-indigo-400 to-indigo-800">
                     Upcoming Happenings
                 </h2>
                 <p className="text-base md:text-lg text-center text-slate-100 mb-4">
