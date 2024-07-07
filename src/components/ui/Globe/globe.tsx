@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import createGlobe, { COBEOptions } from "cobe";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSpring } from "react-spring";
 
 const cn = (...args: any[]) => {
@@ -25,7 +25,7 @@ const GLOBE_CONFIG: COBEOptions = {
   glowColor: [129 / 255, 140 / 255, 248 / 255],
   markers: [
     {
-      location: [25.331558, 74.645722], // Bhilwara Latitude and Longitude [lat , long]
+      location: [51.477928,  -0.001545], // Bhilwara Latitude and Longitude [lat , long]
       size: 0.050,
     },
   ],
@@ -51,6 +51,25 @@ export const Globe = ({
       precision: 0.001,
     },
   }));
+  
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setUserLocation([latitude, longitude]);
+        },
+        function (error) {
+          console.error("Error getting user location:", error);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  }, []);
 
   const onRender = (state: Record<string, any>) => {
     phi += 0.005; 
@@ -70,8 +89,13 @@ export const Globe = ({
     window.addEventListener("resize", onResize);
     onResize();
 
+    const markers = userLocation
+      ? [{ location: userLocation, size: 0.050 }]
+      : config.markers;
+
     const globe = createGlobe(canvasRef.current!, {
       ...config,
+      markers,
       width: width * 2,
       height: width * 2,
       onRender,
@@ -82,7 +106,7 @@ export const Globe = ({
       globe.destroy();
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [userLocation, config]);
 
   return (
     <div className={cn("mx-auto aspect-[1/1] w-full max-w-[600px]", className)}>
