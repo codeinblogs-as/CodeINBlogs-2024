@@ -25,7 +25,7 @@ const GLOBE_CONFIG: COBEOptions = {
   glowColor: [129 / 255, 140 / 255, 248 / 255],
   markers: [
     {
-      location: [51.477928,  -0.001545], // Bhilwara Latitude and Longitude [lat , long]
+      location: [51.477928,  -0.001545], // Default Latitude and Longitude [lat , long]
       size: 0.050,
     },
   ],
