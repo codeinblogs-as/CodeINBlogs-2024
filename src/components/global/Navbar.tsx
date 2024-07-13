@@ -5,7 +5,7 @@ import AnimatedGradientText from '../ui/animated-gradient-text';
 import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import Logo from "@/../public/CodeINBlogs.png";
-import LoginButton from './LoginButton';
+import LoginButton from '../ui/LoginButton';
 
 type NavItem = {
   name: string;

@@ -1,4 +1,4 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Navbar from "@/components/global/Navbar";
 import AnimatedGradientText from "@/components/ui/animated-gradient-text";
 import { cn } from "@/lib/utils";
@@ -16,10 +16,12 @@ import WhoWeAre from "@/components/global/about";
 import UpcommingHappenings from "@/components/global/UpcommingHappenings";
 import BlogsSection from "@/components/global/blogs";
 import OpenSource from "@/components/global/opensource";
+import JoinCommunity from "@/components/global/join-community";
 export default async function Home() {
   return (
     <div>
       <SpeedInsights></SpeedInsights>
+
       <main className="flex items-center justify-center overflow-hidden flex-col gap-10 md:mx-28">
         <Navbar />
         <GridPattern
@@ -114,6 +116,7 @@ export default async function Home() {
       <UpcommingHappenings/>
       <BlogsSection/>
 <OpenSource/> 
+<JoinCommunity/>
    </div>
   );
 }
