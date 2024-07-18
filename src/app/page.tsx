@@ -17,6 +17,7 @@ import UpcommingHappenings from "@/components/global/UpcommingHappenings";
 import BlogsSection from "@/components/global/blogs";
 import OpenSource from "@/components/global/opensource";
 import JoinCommunity from "@/components/global/join-community";
+import Testimonials from "@/components/global/testimonials";
 export default async function Home() {
   return (
     <div>
@@ -117,6 +118,7 @@ export default async function Home() {
       <BlogsSection/>
 <OpenSource/> 
 <JoinCommunity/>
+<Testimonials></Testimonials>
    </div>
   );
 }
