@@ -71,7 +71,7 @@ export default async function Home() {
               </CornerBorder>
             </div>
 
-            <Link href="#" className="flex overflow-hidden rounded-full">
+            <Link href="/upload" className="flex overflow-hidden rounded-full">
               <AnimatedGradientText className="m-2">
                 <span
                   className={cn(
