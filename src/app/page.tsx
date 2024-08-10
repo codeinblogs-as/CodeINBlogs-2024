@@ -19,6 +19,7 @@ import OpenSource from "@/components/global/opensource";
 import JoinCommunity from "@/components/global/join-community";
 import Testimonials from "@/components/global/testimonials";
 import CornerBorder from "@/components/ui/plusCornerBorder";
+import Footer from "@/components/global/footer";
 export default async function Home() {
     return (
       <div>
@@ -130,7 +131,8 @@ export default async function Home() {
         <BlogsSection />
         <OpenSource />
         <JoinCommunity />
-        <Testimonials />
+        {/* <Testimonials /> */}
+        <Footer/>
       </div>
     );
   }

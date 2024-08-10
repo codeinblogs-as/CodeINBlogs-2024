@@ -92,9 +92,10 @@ const Testimonials = () => {
   return (
     <section className='testimonials'>
     <div className="flex flex-col items-center justify-center gap-5 py-12 bg-gradient-to-br from-black/30 via-black/80 to-black/60 bg-opacity-60 backdrop-filter backdrop-blur-4xl">
-      <h2 className="text-3xl font-bold md:text-4xl text-center mb-2 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-[#562e69] via-[#483D8B] to-[#4434b0]">
-      What Developers Are Saying About CodeINBlogs
-      </h2>
+    <h2 className="text-3xl font-bold md:text-4xl text-center mb-2 tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-[#b087f7] via-[#9b8df7] to-[#8baff5]">
+  What Developers Are Saying About CodeINBlogs
+</h2>
+
       <div className="relative mt-12 flex h-full w-full flex-col items-center justify-center gap-5 md:flex-row">
         {[0, 1, 2].map((colIndex) => (
           <div key={colIndex} className="flex flex-col justify-center gap-4">
