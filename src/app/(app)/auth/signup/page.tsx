@@ -16,8 +16,26 @@ import CodeINBlogsLogo from "../component/logo/CodeINBlogs.png";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import toast, { Toaster } from 'react-hot-toast';
+import bcrypt from 'bcryptjs';
+import User from '@/models/User'; // Ensure this import is correct
+import React from 'react';
+import { useAuth } from "@/context/AuthContext";
 
-export default function Signup() {
+interface SignupData {
+  first: string;
+  last: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
+const SignupPage: React.FC = () => {
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
+    return <div>You are already logged in.</div>; // Redirect or show a message
+  }
+
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
@@ -54,6 +72,12 @@ export default function Signup() {
       });
     };
   }, []);
+
+  const handleSignup = async (data: SignupData) => {
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    const user = new User({ ...data, password: hashedPassword });
+    await user.save();
+  };
 
   return (
     <div className="flex items-center justify-center py-4">
@@ -187,7 +211,6 @@ export default function Signup() {
                 <div className="bg-neutral-800 pt-px rounded-b-[20px] overflow-hidden">
                   <div className="flex flex-col items-center justify-center">
                     <div className="py-2 px-2">
-
                       <Link href="./login"> <div className="text-center text-sm">
                         Already have an account?{" "}
                         <span className="text-primary">Sign in</span>
@@ -211,4 +234,6 @@ export default function Signup() {
       </div>
     </div>
   );
-}
+};
+
+export default SignupPage;

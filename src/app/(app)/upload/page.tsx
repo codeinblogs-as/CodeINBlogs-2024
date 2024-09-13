@@ -5,6 +5,8 @@ import Image from "next/image";
 import Head from "next/head";
 import { format } from "date-fns";
 import { FileUpload } from "@/components/global/fileUpload";
+import Blog from '@/models/Blog';
+import connectDB from '@/lib/mongodb';
 
 export default function UploadBlog() {
   const [title, setTitle] = useState("");
@@ -17,10 +19,16 @@ export default function UploadBlog() {
   const [isClient, setIsClient] = useState(false);
   const [publishedDate] = useState(format(new Date(), "MMMM dd, yyyy"));
   const [files, setFiles] = useState<File[]>([]);
+  const [userEmail, setUserEmail] = useState<string>(""); // Define userEmail state
 
   useEffect(() => {
     setIsClient(true);
+    console.log("isClient set to true");
   }, []);
+
+  if (!isClient) {
+    return <div>Loading...</div>; // Show a loading indicator
+  }
 
   const handleFileUpload = (uploadedFiles: File[]) => {
     setFiles(uploadedFiles);
@@ -34,7 +42,11 @@ export default function UploadBlog() {
     }
   };
 
-  if (!isClient) return null;
+  const handleUpload = async (data: { title: string; description: string; category: string; socialLink: string; blogImg: string; email: string; }) => { // Specify types
+    await connectDB();
+    const blog = new Blog({ ...data, email: userEmail }); // Ensure userEmail is defined
+    await blog.save();
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-[#12111d] text-white">

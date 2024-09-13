@@ -1,5 +1,6 @@
 import React from "react";
 import LinkArrow from "./linkArrow";
+import Link from 'next/link';
 
 function Footer() {
 	return (
@@ -30,6 +31,10 @@ function Footer() {
 					Github{" "}
 					<LinkArrow classname="group-hover/git:opacity-100 opacity-0 transition hidden md:block" />
 				</a>
+                <Link href="/admindashboard" >
+                dashboard
+                </Link>
+
 			</div>
 		</footer>
 	);
