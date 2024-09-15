@@ -1,13 +1,13 @@
 import React from 'react';
-import { AuthProvider } from './context/AuthContext';
-import LoginPage from './auth/login/page';
-import SignupPage from './auth/signup/page';
+import SignupPage from './(app)/auth/signup/page';
+import { AuthProvider } from '@/context/AuthContext';
+// import LoginPage from './auth/login/page';
 
 const App: React.FC = () => {
     return (
         <AuthProvider>
             {/* Your routing logic here */}
-            <LoginPage />
+            {/* <LoginPage /> */}
             <SignupPage />
         </AuthProvider>
     );

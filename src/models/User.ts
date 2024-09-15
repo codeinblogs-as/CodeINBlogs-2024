@@ -38,6 +38,7 @@ const connectDB = async () => {
     await connectDB(); // Ensure DB connection
 })();
 
-const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
+// Define the User model
+const User: Model<IUser> = mongoose.models?.User || mongoose.model<IUser>('User', UserSchema);
 
 export default User;
