@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Input } from "../component/input";
@@ -31,11 +31,6 @@ interface SignupData {
 
 const SignupPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
-
-  if (isAuthenticated) {
-    return <div>You are already logged in.</div>; // Redirect or show a message
-  }
-
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
@@ -72,6 +67,10 @@ const SignupPage: React.FC = () => {
       });
     };
   }, []);
+
+  if (isAuthenticated) {
+    return <div>You are already logged in.</div>;
+  }
 
   const handleSignup = async (data: SignupData) => {
     const hashedPassword = await bcrypt.hash(data.password, 10);
