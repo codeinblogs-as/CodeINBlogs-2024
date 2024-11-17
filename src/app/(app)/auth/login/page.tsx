@@ -18,14 +18,15 @@ import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import bcrypt from 'bcryptjs';
 import User from '@/models/User'; // Ensure this import is correct
-import { useAuth } from '@/context/AuthContext';
-// import { useRouter } from 'next/router';
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
-  const { user, login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const router = useRouter();
+  const { isLoggedIn,logIn } = useAuth();
+  const router = useRouter();
 
 
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -78,7 +79,13 @@ const handleLogin = async (email: string, password: string) => {
     const data = await response.json();
 
     if (response.ok) {
+
+      const token=data.token;
+      logIn(data,token);
+      localStorage.setItem('auth', JSON.stringify(data));
+
       toast.success(data.message);
+      router.push("/");
       // Perform any additional actions on successful login
       // e.g., set user session or navigate to a dashboard
     } else {

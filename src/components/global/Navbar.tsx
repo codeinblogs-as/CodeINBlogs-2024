@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import Logo from "@/../public/CodeINBlogs.png";
 import LoginButton from '../ui/LoginButton';
+import { useAuth } from '@/context/AuthContext';
 
 type NavItem = {
   name: string;
@@ -16,7 +18,8 @@ type Props = {
   user?: boolean;
 };
 
-const Navbar: React.FC<Props> = ({ user }) => {
+const Navbar: React.FC<Props> = () => {
+  const {isLoggedIn}=useAuth();
   const navItems: NavItem[] = [
     {
       name: 'Home',
@@ -57,7 +60,7 @@ const Navbar: React.FC<Props> = ({ user }) => {
           {/* Add any additional elements here */}
         </div>
         <aside className="flex items-center gap-4">
-          {user ? (
+          {isLoggedIn ? (
             <Link href="/dashboard" className="flex overflow-hidden rounded-full bg-background">
               <AnimatedGradientText>
                 <span className={cn(`animate-gradient flex bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`)}>

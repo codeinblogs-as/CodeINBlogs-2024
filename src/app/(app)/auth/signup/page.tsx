@@ -30,7 +30,7 @@ interface SignupData {
 }
 
 const SignupPage: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
@@ -68,9 +68,6 @@ const SignupPage: React.FC = () => {
     };
   }, []);
 
-  if (isAuthenticated) {
-    return <div>You are already logged in.</div>;
-  }
 
   const handleSignup = async (data: SignupData) => {
     try {

@@ -1,13 +1,24 @@
-import mongoose from 'mongoose';
+// models/Post.ts
+import mongoose, { Document, Model, Schema } from 'mongoose'
 
-const BlogSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    category: { type: String, required: true },
-    socialLink: { type: String },
-    blogImg: { type: String },
-    email: { type: String, required: true },
-    published: { type: Boolean, default: false },
-});
+export interface IPost extends Document {
+  title: string
+  subtitle?: string
+  tags: string[]
+  coverImage?: string
+  content: string
+  userId: mongoose.Schema.Types.ObjectId
+}
 
-export default mongoose.models.Blog || mongoose.model('Blog', BlogSchema);
+const PostSchema: Schema = new Schema({
+  title: { type: String, required: true },
+  subtitle: { type: String },
+  tags: { type: [String], required: true },
+  coverImage: { type: String },
+  content: { type: String, required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' }
+
+},
+{timestamps:true})
+
+export const Post: Model<IPost> = mongoose.models.Post || mongoose.model<IPost>('Post', PostSchema)

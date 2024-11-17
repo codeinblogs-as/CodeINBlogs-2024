@@ -25,7 +25,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${GeistSans.className} ${isHomePage ? 'dark' : ''}`}>
         <ThemeProvider attribute="class" defaultTheme={isHomePage ? 'dark' : 'light'}>
+          <AuthProvider>
           {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
