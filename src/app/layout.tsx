@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { GeistSans } from 'geist/font/sans';
 import "./globals.css";
 import { AuthProvider } from '@/context/AuthContext'; // Import your context provider
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "CodeINBlogs",
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={GeistSans.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+
+
+                      {children}
+
+
       </body>
     </html>
   );
