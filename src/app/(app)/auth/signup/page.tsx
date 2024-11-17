@@ -73,10 +73,45 @@ const SignupPage: React.FC = () => {
   }
 
   const handleSignup = async (data: SignupData) => {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    const user = new User({ ...data, password: hashedPassword });
-    await user.save();
+    try {
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        toast.success('Account created successfully!');
+        // Redirect or update UI
+      } else {
+        toast.error(result.message || 'Failed to create account.');
+      }
+    } catch (error) {
+      toast.error('An error occurred. Please try again later.');
+    }
   };
+  const handleFormSubmit = (e: React.FormEvent) => {
+  console.log("button clikce")
+    e.preventDefault();
+  
+    const form = formRef.current;
+    console.log("form ,",form);
+    if (!form) return;
+  
+    const data: SignupData = {
+      first: form.first.value,
+      last: form.last.value,
+      username: form.username.value,
+      email: form.email.value,
+      password: form.password.value,
+    };
+  
+    handleSignup(data);
+  };  
 
   return (
     <div className="flex items-center justify-center py-4">
@@ -146,7 +181,7 @@ const SignupPage: React.FC = () => {
                   </div>
                   <div className="text-center text-sm mb-4">or</div>
 
-                  <form ref={formRef} className="flex flex-col gap-6">
+                  <form ref={formRef} className="flex flex-col gap-6" onSubmit={handleFormSubmit}>
                     <div className="flex justify-between gap-2">
                       <div>
                         <Label htmlFor="first">First name</Label>
@@ -195,17 +230,19 @@ const SignupPage: React.FC = () => {
                         className="w-full px-4 py-2 rounded-md border border-neutral-700 bg-neutral-800/80 placeholder-neutral-500"
                       />
                     </div>
-                  </form>
-                </TextureCardContent>
-                <TextureSeparator />
-                <TextureCardFooter className=" rounded-b-sm">
-                  <TextureButton variant="accent" className="w-full">
+                    <TextureCardFooter className=" rounded-b-sm">
+                  <TextureButton variant="accent" className="w-full" type="submit">
                     <div className="flex gap-1 items-center justify-center">
                       Continue
                       <ArrowRight className="h-4 w-4 text-neutral-50 mt-[1px]" />
                     </div>
                   </TextureButton>
                 </TextureCardFooter>
+
+                  </form>
+                </TextureCardContent>
+                <TextureSeparator />
+             
 
                 <div className="bg-neutral-800 pt-px rounded-b-[20px] overflow-hidden">
                   <div className="flex flex-col items-center justify-center">

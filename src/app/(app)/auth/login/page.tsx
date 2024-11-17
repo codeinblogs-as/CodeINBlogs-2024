@@ -19,19 +19,14 @@ import toast, { Toaster } from 'react-hot-toast';
 import bcrypt from 'bcryptjs';
 import User from '@/models/User'; // Ensure this import is correct
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 export default function Login() {
   const { user, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    if (user) {
-      router.push("/dashboard");
-    }
-  }, [user, router]);
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -70,20 +65,35 @@ export default function Login() {
     };
   }, []);
 
-  const handleLogin = async (email: string, password: string) => {
-    const user = await User.findOne({ email });
-    if (user && await bcrypt.compare(password, user.password)) {
-        // Set user session or token
+// Updated handleLogin function in your Login component
+
+const handleLogin = async (email: string, password: string) => {
+  try {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      toast.success(data.message);
+      // Perform any additional actions on successful login
+      // e.g., set user session or navigate to a dashboard
     } else {
-        // Handle login error
+      toast.error(data.message);
     }
-  };
+  } catch (error) {
+    toast.error('An error occurred. Please try again.');
+  }
+};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, password);
+    await handleLogin(email, password);
   };
-
+  
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Toaster />
