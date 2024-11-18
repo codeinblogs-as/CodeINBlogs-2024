@@ -86,8 +86,6 @@ const handleLogin = async (email: string, password: string) => {
 
       toast.success(data.message);
       router.push("/");
-      // Perform any additional actions on successful login
-      // e.g., set user session or navigate to a dashboard
     } else {
       toast.error(data.message);
     }
