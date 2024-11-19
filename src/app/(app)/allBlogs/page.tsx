@@ -2,8 +2,8 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 interface Blog {
   title: string;
   content: string;
@@ -15,6 +15,7 @@ interface Blog {
     authorImg: string;
   };
   image: string;
+  slug: string
 }
 
 interface ContainerProps extends React.ComponentPropsWithoutRef<'div'> {}
@@ -35,13 +36,12 @@ const getRandomColor = () => {
 export default function BlogsSection() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const router = useRouter();
-
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await fetch('/api/displayBlog');
         const data = await response.json();
-        
+
         const formattedData = data.map((post: any) => ({
           title: post.title,
           content: post.content,
@@ -50,10 +50,12 @@ export default function BlogsSection() {
             name: post.userId?.username || 'Unknown',
             date: new Date(post.createdAt).toLocaleDateString(),
             readTime: '5 min read',
-            authorImg: '/default-author.jpg', // Replace with actual image if available
+            authorImg: "", // Replace with actual image if available
           },
           image: post.coverImage || '/default-cover.jpg',
+          slug: post.slug || post._id, // Use slug or id for unique route
         }));
+        console.log("formated data",formattedData);
 
         setBlogs(formattedData);
       } catch (error) {
@@ -63,6 +65,11 @@ export default function BlogsSection() {
 
     fetchBlogs();
   }, []);
+
+  const redirectToSepcific = async (blogslug: string) => {
+    console.log("Ad");
+    router.push(`/allBlogs/${blogslug}`);
+  };
 
   return (
     <section
@@ -83,9 +90,10 @@ export default function BlogsSection() {
           </p>
         </div>
         <ul className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 mt-8 lg:max-w-none lg:grid-cols-3">
-          {blogs.slice(0, 3).map((blog, index) => (
+          {blogs.map((blog, index) => (
             <li key={index}>
-              <figure className="relative rounded-2xl bg-black/60 transform-gpu [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl">
+                 
+              <figure className="relative rounded-2xl bg-black/60 transform-gpu [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl"   onClick={() => redirectToSepcific(blog.slug)}>
                 <div className="relative">
                   <Image
                     src={blog.image}
@@ -119,18 +127,11 @@ export default function BlogsSection() {
                   </div>
                 </figcaption>
               </figure>
+             
             </li>
           ))}
         </ul>
         
-        <div className="flex justify-center mt-5">
-          <button
-            onClick={() => router.push('/allBlogs')}
-            className="z-50 px-4 py-2 text-indigo-200 font-medium bg-[#12111d] rounded-full inline-flex items-center border border-1 border-gray-800"
-          >
-            Explore More Blogs
-          </button>
-        </div>
         
       </Container>
     </section>

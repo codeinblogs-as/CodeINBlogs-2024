@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { ArrowLeft, Heart, MessageCircle, Share2, Bookmark, Moon, Sun, ChevronDown, ChevronUp } from 'lucide-react'
@@ -35,6 +36,16 @@ interface Comment {
   avatar: string;
 }
 
+interface Blog {
+    title: string;
+    content: string;
+    category: string;
+    author: string
+    image: string;
+    
+  }
+  
+
 export default function BlogPage() {
   const [likes, setLikes] = useState<number>(42)
   const [comments, setComments] = useState<Comment[]>([
@@ -46,6 +57,9 @@ export default function BlogPage() {
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState<boolean>(false)
+  const pathname = usePathname();
+  const slug = pathname.split('/').pop();
+  const [blog, setBlog] = useState<Blog | null>(null);
 
   useEffect(() => {
     setMounted(true)
@@ -81,13 +95,35 @@ export default function BlogPage() {
     setIsDetailOpen(!isDetailOpen)
   }
 
+  useEffect(() => {
+    if (slug) {
+      const fetchBlog = async () => {
+        try {
+            console.log("Slug ",slug);
+            const response = await fetch(`/api/displaySpecificBlog?slug=${slug}`);
+
+          const data = await response.json();
+          setBlog(data);
+        } catch (error) {
+          console.error('Failed to fetch blog post', error);
+        }
+      };
+
+      fetchBlog();
+    }
+  }, [slug]);
+
+  if (!blog) {
+    return <p>Loading...</p>;
+  }
+
   if (!mounted) return null
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-10 backdrop-blur-lg bg-background/80 border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="#" className="inline-flex items-center text-sm font-medium text-primary hover:underline">
+          <Link href="/allBlogs" className="inline-flex items-center text-sm font-medium text-primary hover:underline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to all posts
           </Link>
@@ -110,14 +146,14 @@ export default function BlogPage() {
       <main className="max-w-4xl mx-auto px-4 py-8">
         <article className="space-y-8">
         <div className="space-y-4">
-            <h1 className="text-4xl font-bold tracking-tight">blog title</h1>
+            <h1 className="text-4xl font-bold tracking-tight">{blog.title}</h1>
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-2">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Author" />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
-                <span>John Doe</span>
+                <span>{blog.author}</span>
               </div>
               <Separator orientation="vertical" className="h-4" />
               <span>8 min read</span>
@@ -127,17 +163,14 @@ export default function BlogPage() {
           </div>
 
           <Image
-            src="/placeholder.svg?height=450&width=800"
+            src={blog.coverImage  }
             alt="Blog post cover image"
             width={800}
             height={450}
             className="rounded-lg object-cover w-full"
           />
-
-          <div className="prose prose-lg max-w-none dark:prose-invert">
-           
-          blog description
-          </div>
+   <div className="prose prose-lg max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: blog.content }} />
+       
           <div className="mt-8 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">

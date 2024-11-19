@@ -14,20 +14,21 @@ import {
 } from "../component/texture-card";
 import CodeINBlogsLogo from "../component/logo/CodeINBlogs.png";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
 import bcrypt from 'bcryptjs';
 import User from '@/models/User'; // Ensure this import is correct
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from 'next/navigation'
-
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
 export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isLoggedIn,logIn } = useAuth();
   const router = useRouter();
-
+  const [user, setUser] = useState([]);
 
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -98,6 +99,39 @@ const handleLogin = async (email: string, password: string) => {
     e.preventDefault();
     await handleLogin(email, password);
   };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+        setUser(codeResponse);
+        toast.success("User login successfully");
+        logIn(codeResponse);
+    },
+    onError: (error) => console.log('Login Failed:', error)
+});
+
+useEffect(() => {
+  if (user) {
+    console.log("user",user);
+      axios
+          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json',
+              },
+          })
+          .then((res) => {
+              axios.post("/api/googlelogin", { profile: res.data }).then((response) => {
+                  console.log('User register successfully', response.data);
+                  const token = response.data.token;
+                  logIn(response.data, token);
+                  localStorage.setItem('auth', JSON.stringify(response.data));
+                  window.location.reload();
+              });
+          })
+          .catch((err) => console.log(err));
+  }
+}, [user]);
+
   
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -119,7 +153,7 @@ const handleLogin = async (email: string, password: string) => {
                 <TextureSeparator />
                 <TextureCardContent>
                   <div className="flex justify-center gap-2 mb-4">
-                    <TextureButton variant="icon">
+                    <TextureButton variant="icon" onClick={handleGoogleLogin}>
                       <svg
                         width="256"
                         height="262"
