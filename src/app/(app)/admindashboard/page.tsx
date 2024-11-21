@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState ,useRef,useEffect} from 'react'
 import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -20,7 +20,99 @@ export default function ModernAdminDashboard() {
   const [showNewMailModal, setShowNewMailModal] = useState(false)
   const [showNewEventModal, setShowNewEventModal] = useState(false)
   const [showNewPartnerModal, setShowNewPartnerModal] = useState(false)
+  const [events, setEvents] = useState<Event[]>([]);
+  const [formData, setFormData] = useState({
+    eventImage: "",
+    eventName: "",
+    eventDescription: "",
+    eventDateTime: "",
+    eventType: "",
+  });
+  const fileInputRef = useRef<HTMLInputElement | null>(null); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
+  // Handle input change
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Handle file upload
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData((prev) => ({ ...prev, eventImage: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Trigger hidden file input when clicking the visible upload button
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  // Submit form
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      const res = await fetch("/api/createEvent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setMessage("Event created successfully!");
+        setFormData({
+          eventImage: "",
+          eventName: "",
+          eventDescription: "",
+          eventDateTime: "",
+          eventType: "",
+        });
+      } else {
+        setMessage(result.message || "Failed to create event.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setMessage("An unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/displayEvent");
+        const data = await response.json();
+        if (response.ok) {
+          setEvents(data.events);
+        } else {
+          console.error(data.message || "Failed to fetch events");
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+
+  
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="bg-white shadow-sm">
@@ -185,63 +277,125 @@ export default function ModernAdminDashboard() {
                       Enter the details of the new event below.
                     </DialogDescription>
                   </DialogHeader>
-                  <form className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="eventImage">Event Image</Label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-gray-400">
-                        <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                        <p className="mt-1 text-sm text-gray-600">Drag and drop or click to upload</p>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="eventName">Event Name</Label>
-                      <Input id="eventName" placeholder="Enter event name" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="eventDescription">Event Description</Label>
-                      <Textarea id="eventDescription" placeholder="Enter event description" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="eventDateTime">Date and Time</Label>
-                      <Input id="eventDateTime" type="datetime-local" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="eventType">Event Type</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select event type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="bootcamp">Bootcamp</SelectItem>
-                          <SelectItem value="hackathon">Hackathon</SelectItem>
-                          <SelectItem value="event">Event</SelectItem>
-                          <SelectItem value="webinar">Webinar</SelectItem>
-                          <SelectItem value="conference">Conference</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </form>
-                  <DialogFooter>
-                    <Button type="submit">Add Event</Button>
-                  </DialogFooter>
+                  <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* Event Image */}
+        <div className="space-y-2">
+          <label htmlFor="eventImage" className="block font-medium">
+            Event Image
+          </label>
+          <div
+            onClick={triggerFileInput} // Trigger file input
+            className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-gray-400"
+          >
+            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+            <p className="mt-1 text-sm text-gray-600">Drag and drop or click to upload</p>
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            id="eventImage"
+            accept="image/*"
+            onChange={handleFileUpload}
+            className="hidden"
+          />
+        </div>
+
+        {/* Event Name */}
+        <div className="space-y-2">
+          <label htmlFor="eventName" className="block font-medium">
+            Event Name
+          </label>
+          <input
+            id="eventName"
+            placeholder="Enter event name"
+            className="w-full border rounded px-3 py-2"
+            value={formData.eventName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        {/* Event Description */}
+        <div className="space-y-2">
+          <label htmlFor="eventDescription" className="block font-medium">
+            Event Description
+          </label>
+          <textarea
+            id="eventDescription"
+            placeholder="Enter event description"
+            className="w-full border rounded px-3 py-2"
+            value={formData.eventDescription}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        {/* Date and Time */}
+        <div className="space-y-2">
+          <label htmlFor="eventDateTime" className="block font-medium">
+            Date and Time
+          </label>
+          <input
+            id="eventDateTime"
+            type="datetime-local"
+            className="w-full border rounded px-3 py-2"
+            value={formData.eventDateTime}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        {/* Event Type */}
+        <div className="space-y-2">
+          <label htmlFor="eventType" className="block font-medium">
+            Event Type
+          </label>
+          <select
+            id="eventType"
+            className="w-full border rounded px-3 py-2"
+            value={formData.eventType}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Select event type</option>
+            <option value="bootcamp">Bootcamp</option>
+            <option value="hackathon">Hackathon</option>
+            <option value="event">Event</option>
+            <option value="webinar">Webinar</option>
+            <option value="conference">Conference</option>
+          </select>
+        </div>
+
+        {/* Submit Button */}
+        <div className="mt-4">
+          <button
+            type="submit"
+            className={`w-full py-2 px-4 rounded text-white ${
+              isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            }`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Submitting..." : "Create Event"}
+          </button>
+        </div>
+      </form>
+      {message && <p className="mt-4 text-center text-sm text-gray-700">{message}</p>}
+                 
                 </DialogContent>
               </Dialog>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <EventCard
-                image="/placeholder.svg?height=100&width=100"
-                name="Tech Conference 2024"
-                description="Join us for the biggest tech conference of the year."
-                dateTime="23rd March 2024 & 09:00 AM"
-                type="Conference"
-              />
-              <EventCard
-                image="/placeholder.svg?height=100&width=100"
-                name="Web Dev Bootcamp"
-                description="Intensive 4-week web development bootcamp for beginners."
-                dateTime="1st April 2024 & 10:00 AM"
-                type="Bootcamp"
-              />
+            {events.map((event) => (
+        <EventCard
+          key={event._id}
+          image={event.eventImage}
+          name={event.eventName}
+          description={event.eventDescription}
+          dateTime={new Date(event.eventDateTime).toLocaleString()}
+          type={event.eventType}
+        />
+      ))}
+
             </div>
           </TabsContent>
 
@@ -338,13 +492,7 @@ function EventCard({ image, name, description, dateTime, type }: { image: string
         <Badge>{type}</Badge>
       </CardContent>
       <CardFooter className="bg-gray-50 border-t px-4 py-3">
-        <div className="flex justify-between items-center w-full">
-          <Button variant="outline" size="sm">Edit</Button>
-          <Button variant="destructive" size="sm">
-            <Trash className="mr-2 h-4 w-4" />
-            Delete
-          </Button>
-        </div>
+       
       </CardFooter>
     </Card>
   )

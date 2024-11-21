@@ -22,6 +22,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from 'next/navigation'
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import { setCookie } from "cookies-next";
 export default function Login() {
 
   const [email, setEmail] = useState("");
@@ -83,6 +84,7 @@ const handleLogin = async (email: string, password: string) => {
 
       const token=data.token;
       logIn(data,token);
+      setCookie("userRole",data.role, { maxAge: 60 * 60 * 24 });
       localStorage.setItem('auth', JSON.stringify(data));
 
       toast.success(data.message);
