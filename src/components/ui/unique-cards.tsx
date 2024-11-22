@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs, faHandsHelping, faLaptopCode, faBriefcase, faNewspaper, faBookOpen } from '@fortawesome/free-solid-svg-icons';
+import { faCogs, faHandsHelping, faLaptopCode, faBriefcase, faNewspaper, faBookOpen } from '@fortawesome/free-solid-svg-icons'; // Fixed import path
 import MagicalCard from '../global/magical-hover';
 
 const UniqueCards = () => {

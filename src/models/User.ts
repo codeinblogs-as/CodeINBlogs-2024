@@ -8,7 +8,7 @@ interface IUser extends Document {
     email: string;
     password: string;
     profileImage:string
-   
+
 }
 
 // Define the User schema
@@ -26,10 +26,7 @@ const UserSchema = new mongoose.Schema<IUser>({
 // Ensure the connection is established before defining the model
 const connectDB = async () => {
     if (mongoose.connection.readyState < 1) {
-        await mongoose.connect(process.env.MONGODB_URI || '', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGODB_URI || '');
         console.log('MongoDB connected');
     }
 };

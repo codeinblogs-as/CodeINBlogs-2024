@@ -41,7 +41,7 @@ const Navbar: React.FC<Props> = () => {
 
   return (
     <>
-      <header className='fixed top-0 left-0 right-0 py-2 w-full bg-background/70 backdrop-blur-3xl z-[100] flex px-20 items-center border-b-[1px] border-neutral-900 justify-between'>
+      <header className='overflow-x-hidden fixed top-0 left-0 right-0 py-2 w-full bg-background/70 backdrop-blur-3xl z-[100] flex px-20 items-center border-b-[1px] border-neutral-900 justify-between'>
         <aside className='flex items-center gap-[2px]'>
           <Image src={Logo} alt='CodeINBlogs Logo' className='w-36 h-auto' />
         </aside>

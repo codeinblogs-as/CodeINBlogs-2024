@@ -26,7 +26,7 @@ export default async function Home() {
         <div>
           <SpeedInsights />
 
-          <main className="flex items-center justify-center overflow-hidden flex-col gap-10 md:mx-28">
+          <main className="flex items-center justify-center overflow-x-hidden flex-col gap-10 md:mx-28">
             <Navbar />
             <GridPattern
               numSquares={40}

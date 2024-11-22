@@ -27,7 +27,7 @@ const getRandomColor = () => {
     'bg-yellow-700/50',
     'bg-purple-700/50',
     'bg-pink-700/50',
-    'bg-indigo-700/50', 
+    'bg-indigo-700/50',
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -41,7 +41,7 @@ export default function BlogsSection() {
       try {
         const response = await fetch('/api/displayBlog');
         const data = await response.json();
-        
+
         const formattedData = data.map((post: any) => ({
           title: post.title,
           content: post.content,
@@ -50,7 +50,7 @@ export default function BlogsSection() {
             name: post.userId?.username || 'Unknown',
             date: new Date(post.createdAt).toLocaleDateString(),
             readTime: '5 min read',
-            authorImg: '/default-author.jpg', // Replace with actual image if available
+            authorImg: 'https://i.imgur.com/HT2ETSM.jpeg', // Replace with actual image if available
           },
           image: post.coverImage || '/default-cover.jpg',
         }));
@@ -122,7 +122,7 @@ export default function BlogsSection() {
             </li>
           ))}
         </ul>
-        
+
         <div className="flex justify-center mt-5">
           <button
             onClick={() => router.push('/allBlogs')}
@@ -131,7 +131,7 @@ export default function BlogsSection() {
             Explore More Blogs
           </button>
         </div>
-        
+
       </Container>
     </section>
   );

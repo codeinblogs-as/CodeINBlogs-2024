@@ -4,6 +4,11 @@ import { ObjectId } from 'mongoose';
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface UserProfile {
+    lastName: ReactNode;
+    firstName: ReactNode;
+    profileImage: string;
+    createdAt: string | number | Date;
+    email: ReactNode;
     id: number;
     name: string;
     role?: number;
