@@ -7,27 +7,29 @@ import User from '@/models/User';
 export async function GET(req: NextRequest) {
     await connectDB();
     try {
-      // Extract query parameter from the request URL
       const { searchParams } = new URL(req.url);
+      const userId = searchParams.get('slug');
 
-      const userId = searchParams.get('slug'); // Extract the `slug` parameter
-    
-  
       if (!userId) {
         return NextResponse.json({ message: 'No blog ID provided' }, { status: 400 });
       }
-  
-      // Find the blog post by ID
-      const posts = await Post.find({ userId }).sort({ createdAt: -1 });
+
+      const posts = await Post.find({ userId })
+        .sort({ createdAt: -1 })
+        .populate({
+          path: 'userId',
+          select: 'username firstName lastName profileImage',
+          model: User
+        });
+
       if (!posts) {
-        return NextResponse.json({ message: 'Blog post not found' }, { status: 404 });
+        return NextResponse.json({ message: 'Blog posts not found' }, { status: 404 });
       }
-  
-    
+
+      // Return the raw posts with populated userId
       return NextResponse.json(posts, { status: 200 });
     } catch (error) {
       console.error("Error", error);
-      return NextResponse.json({ message: 'Failed to fetch blog post', error }, { status: 500 });
+      return NextResponse.json({ message: 'Failed to fetch blog posts', error }, { status: 500 });
     }
-  }
-  
+}

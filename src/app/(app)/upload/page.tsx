@@ -186,7 +186,7 @@ export default function BlogEditorWithPreview() {
       const content = editor.getHTML()
       const userId=profile?._id;
       const postData = { title, subtitle, tags, coverImage, content,userId }
-  
+
       console.log("psot dat",postData);
       try {
         const response = await axios.post('/api/createBlog', postData)
@@ -201,7 +201,7 @@ export default function BlogEditorWithPreview() {
   }
 
   const BlogPreview = () => (
-    <div className={`min-h-screen bg-background text-foreground ${theme === 'dark' ? 'dark' : ''}`}>
+    <div className={`min-h-screen bg-white text-black ${theme === 'dark' ? 'dark' : ''}`}>
       <header className="sticky top-0 z-10 backdrop-blur-lg bg-background/80 border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
           <button className="inline-flex items-center text-sm font-medium text-primary hover:underline">
@@ -406,7 +406,7 @@ export default function BlogEditorWithPreview() {
           </Avatar>
           <div>
             <p className="font-semibold">{profile?.username}</p>
-        
+
           </div>
         </div>
         <div className="space-x-2">

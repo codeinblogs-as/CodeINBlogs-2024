@@ -88,27 +88,29 @@ const EditProfileForm = () => {
           <DialogTitle>Edit Profile</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="firstName">First Name</Label>
-            <Input
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              className="bg-zinc-800 border-zinc-700 text-white"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              className="bg-zinc-800 border-zinc-700 text-white"
-            />
+          <div className="flex space-x-4">
+            <div className="space-y-2 flex-1">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+                className="bg-zinc-800 border-zinc-700 text-white"
+              />
+            </div>
+            <div className="space-y-2 flex-1">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+                className="bg-zinc-800 border-zinc-700 text-white"
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
@@ -141,7 +143,7 @@ const EditProfileForm = () => {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="bg-zinc-800 border-zinc-700 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600"
+              className="bg-zinc-800 h-fit border-zinc-700 text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-zinc-700 file:text-white hover:file:bg-zinc-600"
             />
           </div>
           <div className="flex justify-center">
