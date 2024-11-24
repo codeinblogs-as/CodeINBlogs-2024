@@ -11,7 +11,7 @@ type Props = {
 
 const LoginButton = ({ cta }: Props) => {
   return (
-    <Link href="/auth/signup" passHref>
+    <Link href="/auth/login" passHref>
       <Button variant={'navigator'} size={'nav'} className='inline-flex overflow-hidden rounded-full cursor-pointer'>
         <AnimatedGradientText className='cursor-pointer m-1'>
           <span className={cn('flex justify-center items-center text-center', cta && 'm-2')}>

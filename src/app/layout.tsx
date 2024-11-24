@@ -7,6 +7,8 @@ import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from "next-themes";
 import { headers } from 'next/headers';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Toaster } from 'react-hot-toast';
+
 export const metadata: Metadata = {
   title: "CodeINBlogs",
   description: "Fastest-Growing Web Dev",
@@ -27,6 +29,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme={isHomePage ? 'dark' : 'light'}>
           <AuthProvider>
           <GoogleOAuthProvider clientId={process.env.GOOGLE_API_KEY || ""}>
+          <Toaster />
           {children}
           </GoogleOAuthProvider>
           </AuthProvider>
