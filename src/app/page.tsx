@@ -48,7 +48,6 @@ export default async function Home() {
                 </span>
               </div>
 
-              {/* Centering the CornerBorder and heading */}
               <div className="flex justify-center items-center w-full">
                 <CornerBorder size="15px" color="#313140" thickness="2px">
                   <h2 className="text-center md:text-5xl text-2xl font-bold md:w-4/5 mx-auto">
@@ -73,21 +72,19 @@ export default async function Home() {
                 </CornerBorder>
               </div>
 
-              <Link href="/upload" className="flex overflow-hidden rounded-full">
-                <AnimatedGradientText className="m-2">
-                  <span
-                    className={cn(
-                      `animate-gradient flex md:text-xl text-xm bg-gradient-to-r from-[#ffaa40] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent bg-background`
-                    )}
-                  >
-                    🎉
-                    <hr className="mx-2 h-6 justify-center items-center flex w-[1px] shrink-0 bg-muted-foreground" />
-                    {" "}
+              <Link href="/upload" className="flex overflow-hidden rounded-full scale-110 hover:scale-105 transition-transform duration-300">
+                <AnimatedGradientText className="m-2 px-3 py-1">
+                  <span className={cn(
+                    `animate-gradient flex md:text-xl text-lg bg-gradient-to-r from-[#483D8B] to-[#FFB6C1] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent bg-background items-center`
+                  )}>
+                    <span className="text-2xl">📝</span>
+                    <hr className="h-6 justify-center items-center flex w-[1px] shrink-0 bg-muted-foreground" />
                     Start Blogging
                   </span>
-                  <ChevronRight className="ml-1 size-5 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+                  <ChevronRight className="ml-1 w-6 h-6 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
                 </AnimatedGradientText>
               </Link>
+
               <div className="w-full h-auto md:py-10 py-4 md:px-3 px-2 md:gap-8 gap-5 border border-[#323232]/50 rounded-xl flex md:flex-row flex-col justify-center items-center bg-black/20 backdrop-blur-2xl z-10">
                 <div className="flex flex-col justify-center items-center md:w-1/4">
                   <div className="flex gap-2 justify-center items-end text-center">
@@ -132,10 +129,7 @@ export default async function Home() {
           <BlogsSection />
           <OpenSource />
           <JoinCommunity />
-          {/* <Testimonials /> */}
           <Footer/>
-
         </div>
-
     );
 }
