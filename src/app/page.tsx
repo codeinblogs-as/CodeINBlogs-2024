@@ -73,16 +73,19 @@ export default async function Home() {
                 </CornerBorder>
               </div>
 
-              <Link href="/upload" className="flex overflow-hidden rounded-full scale-110 hover:scale-105 transition-transform duration-300">
-                <AnimatedGradientText className="m-2 px-3 py-1">
-                  <span className={cn(
-                    `animate-gradient flex md:text-xl text-lg bg-gradient-to-r from-[#483D8B] to-[#FFB6C1] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent bg-background items-center`
-                  )}>
-                    <span className="text-2xl">📝</span>
-                    <hr className="h-6 justify-center items-center flex w-[1px] shrink-0 bg-muted-foreground" />
+              <Link href="/upload" className="flex overflow-hidden rounded-full">
+                <AnimatedGradientText className="m-2">
+                  <span
+                    className={cn(
+                      `animate-gradient flex md:text-xl text-xm bg-gradient-to-r from-[#ffaa40] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent bg-background`
+                    )}
+                  >
+                    🎉
+                    <hr className="mx-2 h-6 justify-center items-center flex w-[1px] shrink-0 bg-muted-foreground" />
+                    {" "}
                     Start Blogging
                   </span>
-                  <ChevronRight className="ml-1 w-6 h-6 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+                  <ChevronRight className="ml-1 size-5 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
                 </AnimatedGradientText>
               </Link>
 
