@@ -46,15 +46,13 @@ const ProfilePage = () => {
 
     return (
         <>
-            {/* Back button moved outside main container */}
-            <Link 
-                href="/" 
-                className="fixed top-6 left-6 flex items-center gap-2 text-white hover:text-gray-300 bg-zinc-800 px-4 py-2 rounded-md transition-colors duration-200 border border-zinc-700 z-50"
-            >
-                <ArrowLeft className="h-5 w-5" />
-                <span className="font-medium">Back to Home</span>
-            </Link>
-
+             <Link 
+          href="/" 
+          className="fixed top-6 left-6 flex items-center gap-2 text-white hover:text-purple-300 bg-[#141421] px-4 py-2 rounded-md transition-colors duration-200 border border-gray-800 z-50 backdrop-blur-md bg-opacity-80"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          <span className="font-medium">Back to Home</span>
+        </Link>
             <div className="min-h-screen bg-black text-white">
                 {isLoggingOut ? (
                     <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-b from-black to-gray-900 text-white">
