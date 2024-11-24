@@ -30,11 +30,11 @@ const Navbar: React.FC<Props> = () => {
     const { isLoggedIn, logOut, profile } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  
     const navItems: NavItem[] = [
         { name: 'Home', link: '/' },
         { name: 'About', link: '/about' },
-        { name: 'Blogs', link: '/blogs' },
+        { name: 'Blogs', link: '/allBlogs' },
         { name: 'Resources', link: '/resources' },
     ];
 
