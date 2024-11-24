@@ -55,7 +55,14 @@ const ProfilePage = () => {
                 </div>
             ) : (
                 <div className="max-w-6xl mx-auto px-4 mt-16 relative z-10">
-                    <div className='p-1 border-2 border-b-0 border border-zinc-800'>
+                    <div className='p-1 border-2 border-b-0 border border-zinc-800 relative'>
+                        <button
+                            onClick={handleLogout}
+                            className="absolute top-2 right-2 flex items-center text-red-500"
+                        >
+                            <LogOut className="h-5 w-5" />
+                            <span className="ml-1">Logout</span>
+                        </button>
                         <Image src={CodeINBlogsBanner} alt="CodeINBlogs Banner" className='w-fit h-full' />
                     </div>
                     <Card className="bg-zinc-900 border-2 border-zinc-800 rounded-tr-none rounded-tl-none border-t-0 shadow-xl">
