@@ -88,6 +88,7 @@ export default async function Home() {
                   <ChevronRight className="ml-1 size-5 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
                 </AnimatedGradientText>
               </Link>
+
               <div className="w-full h-auto md:py-10 py-4 md:px-3 px-2 md:gap-8 gap-5 border border-[#323232]/50 rounded-xl flex md:flex-row flex-col justify-center items-center bg-black/20 backdrop-blur-2xl z-10">
                 <div className="flex flex-col justify-center items-center md:w-1/4">
                   <div className="flex gap-2 justify-center items-end text-center">
