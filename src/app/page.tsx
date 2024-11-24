@@ -48,6 +48,7 @@ export default async function Home() {
                 </span>
               </div>
 
+              {/* Centering the CornerBorder and heading */}
               <div className="flex justify-center items-center w-full">
                 <CornerBorder size="15px" color="#313140" thickness="2px">
                   <h2 className="text-center md:text-5xl text-2xl font-bold md:w-4/5 mx-auto">
@@ -129,7 +130,10 @@ export default async function Home() {
           <BlogsSection />
           <OpenSource />
           <JoinCommunity />
+          {/* <Testimonials /> */}
           <Footer/>
+
         </div>
+
     );
 }
