@@ -1,6 +1,7 @@
 'use client'
 
 import { useState ,useRef,useEffect} from 'react'
+import axios from 'axios'
 import Image from 'next/image'
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -14,13 +15,16 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar, ChevronDown, Layout, Mail, Plus, Trash, Upload, User, Users, FileText, Briefcase } from 'lucide-react'
+import useAdminRedirect from '@/components/userValidation'
 
 export default function ModernAdminDashboard() {
+  useAdminRedirect();
   const [showNewUserModal, setShowNewUserModal] = useState(false)
   const [showNewMailModal, setShowNewMailModal] = useState(false)
   const [showNewEventModal, setShowNewEventModal] = useState(false)
   const [showNewPartnerModal, setShowNewPartnerModal] = useState(false)
   const [events, setEvents] = useState<Event[]>([]);
+  const [communities, setCommunites] = useState<Community[]>([]);
   const [formData, setFormData] = useState({
     eventImage: "",
     eventName: "",
@@ -31,7 +35,10 @@ export default function ModernAdminDashboard() {
   const fileInputRef = useRef<HTMLInputElement | null>(null); 
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-
+  const [users, setUsers] = useState([]);
+  const [partnerName, setPartnerName] = useState("");
+  const [uploadedImage, setUploadedImage] = useState(null); // For preview
+  const [loading, setLoading] = useState(true);
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
@@ -50,6 +57,21 @@ export default function ModernAdminDashboard() {
     }
   };
 
+  useEffect(() => {
+    // Fetch data from the Next.js API route
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/getAllUser"); // Calling the API route
+        setUsers(response.data); // Update the state with the fetched data
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false); // Hide loading spinner
+      }
+    };
+
+    fetchData();
+  }, []);
   // Trigger hidden file input when clicking the visible upload button
   const triggerFileInput = () => {
     if (fileInputRef.current) {
@@ -110,6 +132,62 @@ export default function ModernAdminDashboard() {
 
     fetchEvents();
   }, []);
+  useEffect(() => {
+    const fetchCommunity = async () => {
+      try {
+        const response = await fetch("/api/displayCommunity");
+        const data = await response.json();
+        if (response.ok) {
+          setCommunites(data.communities);
+        } else {
+          console.error(data.message || "Failed to fetch events");
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCommunity();
+  }, []);
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => setUploadedImage(reader.result); // Base64 string
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Submit the form data
+  const handleSubmitCommunity= async (e) => {
+    e.preventDefault();
+
+    if (!partnerName || !uploadedImage) {
+      alert("Please provide both the partner name and image.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/addCommunityImage", {
+        name: partnerName,
+        base64Image: uploadedImage,
+      });
+
+      if (response.status === 200) {
+        alert("Community Partner added successfully!");
+        setShowNewPartnerModal(false);
+        setPartnerName("");
+        setUploadedImage(null);
+      }
+    } catch (error) {
+      console.error("Error adding partner:", error);
+      alert("Failed to add community partner.");
+    }
+  };
+  if (loading) return <p>Loading...</p>;
 
 
   
@@ -128,7 +206,7 @@ export default function ModernAdminDashboard() {
       <main className="container mx-auto px-4 py-8 space-y-8">
         {/* Metrics */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <MetricCard title="Total Users" value="10,234" icon={<Users className="h-6 w-6" />} />
+          <MetricCard title="Total Users" value={users.length} icon={<Users className="h-6 w-6" />} />
           <MetricCard title="Total Visits" value="1,234,567" icon={<Layout className="h-6 w-6" />} />
           <MetricCard title="Active Blogs" value="456" icon={<FileText className="h-6 w-6" />} />
         </section>
@@ -211,24 +289,17 @@ export default function ModernAdminDashboard() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell>2023-01-15</TableCell>
-                    <TableCell>John</TableCell>
-                    <TableCell>Doe</TableCell>
-                    <TableCell>johndoe</TableCell>
-                    <TableCell>john@example.com</TableCell>
-                    <TableCell>5</TableCell>
-                    <TableCell>Member</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-02-20</TableCell>
-                    <TableCell>Jane</TableCell>
-                    <TableCell>Smith</TableCell>
-                    <TableCell>janesmith</TableCell>
-                    <TableCell>jane@example.com</TableCell>
-                    <TableCell>12</TableCell>
-                    <TableCell>Admin</TableCell>
-                  </TableRow>
+                {users.map((user) => (
+              <TableRow key={user._id}>
+                <TableCell>{user.createdAt}</TableCell>
+                <TableCell>{user.firstName}</TableCell>
+                <TableCell>{user.lastName}</TableCell>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.totalBlogs}</TableCell>
+                <TableCell>{user.accessLevel}</TableCell>
+              </TableRow>
+            ))}
                 </TableBody>
               </Table>
             </Card>
@@ -425,40 +496,88 @@ export default function ModernAdminDashboard() {
 
         {/* Community Partners */}
         <section className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-800">Community Partners</h2>
-            <Dialog open={showNewPartnerModal} onOpenChange={setShowNewPartnerModal}>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" /> Add New Partner
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Add New Community Partner</DialogTitle>
-                  <DialogDescription>
-                    Upload the logo of the new community partner.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-gray-400">
-                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-1 text-sm text-gray-600">Drag and drop or click to upload partner logo</p>
-                  </div>
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-gray-800">Community Partners</h2>
+        <Dialog open={showNewPartnerModal} onOpenChange={setShowNewPartnerModal}>
+          <DialogTrigger asChild>
+            <Button>
+              <Plus className="mr-2 h-4 w-4" /> Add New Partner
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add New Community Partner</DialogTitle>
+              <DialogDescription>
+                Upload the logo of the new community partner.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmitCommunity} className="space-y-4">
+              <div>
+                <label htmlFor="partnerName" className="block font-medium">
+                  Community Partner Name
+                </label>
+                <input
+                  type="text"
+                  id="partnerName"
+                  value={partnerName}
+                  onChange={(e) => setPartnerName(e.target.value)}
+                  className="w-full mt-1 p-2 border rounded text-black"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="commImage" className="block font-medium">
+                  Community Partner Image
+                </label>
+                <div
+                  onClick={() => fileInputRef.current.click()}
+                  className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-gray-400"
+                >
+                  {uploadedImage ? (
+                    <img src={uploadedImage} alt="Preview" className="mx-auto max-h-40" />
+                  ) : (
+                    <>
+                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                      <p className="mt-1 text-sm text-gray-600">Drag and drop or click to upload</p>
+                    </>
+                  )}
                 </div>
-                <DialogFooter>
-                  <Button type="submit">Add Partner</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <Image src="/placeholder.svg?height=100&width=200" alt="Partner 1" width={200} height={100} className="rounded-lg shadow-md" />
-            <Image src="/placeholder.svg?height=100&width=200" alt="Partner 2" width={200} height={100} className="rounded-lg shadow-md" />
-            <Image src="/placeholder.svg?height=100&width=200" alt="Partner 3" width={200} height={100} className="rounded-lg shadow-md" />
-            <Image src="/placeholder.svg?height=100&width=200" alt="Partner 4" width={200} height={100} className="rounded-lg shadow-md" />
-          </div>
-        </section>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  id="commImage"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  required
+                />
+              </div>
+              <DialogFooter>
+                <Button type="submit">Add Partner</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+      {/* Display existing community partners */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+  {communities.map((community, index) => (
+    <div key={index} className="rounded-lg shadow-md">
+      <Image 
+        src={community.
+          communityImage
+          } 
+        alt={community.name} 
+        width={200} 
+        height={100} 
+        className="rounded-lg shadow-md" 
+      />
+      <p className="mt-2 text-center text-gray-700">{community.name}</p>
+    </div>
+  ))}
+</div>
+
+    </section>
       </main>
     </div>
   )

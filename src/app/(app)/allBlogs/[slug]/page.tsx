@@ -30,6 +30,7 @@ interface Blog {
   author: string;
   coverImage: string;
   likes: number;
+  likedBy:string[],
   comments: Comment[];
 }
 
@@ -91,27 +92,33 @@ export default function BlogPage() {
   };
 
   const handleLike = async () => {
+    if (!profile?._id) {
+      alert("You need to be logged in to like posts.");
+      return;
+    }
+  
     try {
       const response = await fetch('/api/addLikesBlog', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ postId: blog?._id }),
+        body: JSON.stringify({ postId: blog?._id, userId: profile?._id }), // Pass userId
       });
-
+  
       if (response.ok) {
-        alert("Like added");
-        fetchBlog();
-        // const data = await response.json();
-        // setBlog({ ...blog, likes: data.likes });
+        alert("Like added!");
+        fetchBlog(); // Refresh the blog data to reflect the new like count
       } else {
-        console.error('Failed to like the post');
+        const error = await response.json();
+        alert(error.error); // Display the specific error message, e.g., "User has already liked this post"
       }
     } catch (error) {
       console.error('Error liking the post:', error);
+      alert('Failed to like the post. Please try again later.');
     }
   };
+  
 
   if (!blog) {
     return <p>Loading...</p>;
@@ -146,11 +153,15 @@ export default function BlogPage() {
           <div dangerouslySetInnerHTML={{ __html: blog.content }} className="prose" />
 
           <div className="flex space-x-4">
-            <Button variant="ghost" onClick={handleLike}>
-              <Heart /> {blog.likes}
-            </Button>
-          </div>
-
+  <Button
+    variant="ghost"
+    onClick={handleLike}
+    disabled={blog.likedBy?.includes(profile?._id)} // Disable button if user already liked
+  >
+    <Heart />
+    {blog.likes}
+  </Button>
+</div>
           <div>
             <h3>Comments</h3>
             <ScrollArea>

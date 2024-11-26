@@ -104,7 +104,6 @@ export default function Login() {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
       setUser(codeResponse);
-      toast.success("User login successfully");
       logIn(codeResponse);
     },
     onError: (error) => console.log('Login Failed:', error)
@@ -227,6 +226,13 @@ export default function Login() {
                         <Link href="./signup">
                           <div className="text-center text-sm">
                             Don't have an account?{" "}<span className="text-primary">Sign Up</span>
+                          </div>
+                        </Link>
+                      </div>
+                      <div className="py-2 px-2">
+                        <Link href="./forgotPassword">
+                          <div className="text-center text-sm">
+                        Forgot Password
                           </div>
                         </Link>
                       </div>

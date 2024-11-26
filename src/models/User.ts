@@ -7,18 +7,24 @@ interface IUser extends Document {
     username: string;
     email: string;
     password: string;
+    role:number,
     profileImage:string
+    resetPasswordOtp:string,
+    resetPasswordExpires:Date
 
 }
 
 // Define the User schema
 const UserSchema = new mongoose.Schema<IUser>({
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    firstName: { type: String },
+    lastName: { type: String},
+    username: { type: String, unique: true },
+    email: { type: String, unique: true },
+    password: { type: String,  },
+    role:{type:Number,default:0},
     profileImage: { type: String },
+    resetPasswordOtp: { type: String }, // Encrypted OTP
+    resetPasswordExpires: { type: Date }, // OTP Expiry
 }, {
     timestamps: true
 });

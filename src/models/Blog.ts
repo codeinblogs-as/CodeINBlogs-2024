@@ -14,6 +14,7 @@ export interface IPost extends Document {
   content: string
   userId: mongoose.Schema.Types.ObjectId
   likes:number,
+  likedBy:mongoose.Schema.Types.ObjectId[],
   comments:[commentSchema]
 }
 
@@ -25,6 +26,7 @@ const PostSchema: Schema = new Schema({
   content: { type: String, required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   likes:{type:Number,default:0},
+  likedBy: { type: [mongoose.Schema.Types.ObjectId], default: [] },
   comments:{
     type:[commentSchema]
   }

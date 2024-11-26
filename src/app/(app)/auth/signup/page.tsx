@@ -1,5 +1,7 @@
 "use client";
 import Image from "next/image";
+import axios from "axios";
+import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { Input } from "../component/input";
 import { Label } from "../component/label";
@@ -21,7 +23,7 @@ import User from '@/models/User'; // Ensure this import is correct
 import React from 'react';
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from 'next/navigation'; // Import useRouter for navigation
-
+import { useGoogleLogin } from '@react-oauth/google';
 interface SignupData {
   first: string;
   last: string;
@@ -33,7 +35,36 @@ interface SignupData {
 const SignupPage: React.FC = () => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const router = useRouter(); // Initialize router
+  const [user, setUser] = useState([]);
+  
+  const handleGoogleRegister = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+        setUser(codeResponse);
+       
+    },
+    onError: (error) => console.log('Login Failed:', error)
+});
 
+useEffect(() => {
+  if (user) {
+    console.log("Dfd",user)
+      const res = axios
+          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json',
+              },
+          })
+          .then((res) => {
+              axios.post('/api/googleRegister', { profile: res.data }).then((response) => {
+                alert("Register successfully");
+                router.push('/')
+                  window.location.reload();
+              });
+          })
+          .catch((err) => console.log(err));
+  }
+}, [user]);
   useEffect(() => {
     const form = formRef.current;
     if (!form) return;
@@ -129,7 +160,7 @@ const SignupPage: React.FC = () => {
                 <TextureSeparator />
                 <TextureCardContent>
                   <div className="flex justify-center gap-2 mb-4">
-                    <TextureButton variant="icon">
+                    <TextureButton variant="icon" onClick={handleGoogleRegister}>
                       <svg
                         width="256"
                         height="262"
