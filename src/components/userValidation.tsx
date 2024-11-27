@@ -15,9 +15,9 @@ export default function useAdminRedirect() {
   useEffect(() => {
     if (isClient) {
       const userRole = profile?.role;
-
-      // Redirect if the user is not an admin
-      if (userRole !== '1') {
+  
+      // Compare with the number 1
+      if (userRole !== 1) {
         router.push('/'); // Redirect to homepage or login
       }
     }

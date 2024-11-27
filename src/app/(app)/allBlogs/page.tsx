@@ -66,9 +66,9 @@ export default function BlogsSection() {
     fetchBlogs();
   }, []);
 
-  const redirectToSepcific = async (blogslug: string) => {
+  const redirectToSepcific = async (blogname:string,blogslug: string) => {
     console.log("Ad");
-    router.push(`/allBlogs/${blogslug}`);
+    router.push(`/allBlogs/${blogname}/${blogslug}`);
   };
 
   return (
@@ -93,7 +93,7 @@ export default function BlogsSection() {
           {blogs.map((blog, index) => (
             <li key={index}>
                  
-              <figure className="relative rounded-2xl bg-black/60 transform-gpu [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl"   onClick={() => redirectToSepcific(blog.slug)}>
+              <figure className="relative rounded-2xl bg-black/60 transform-gpu [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl"   onClick={() => redirectToSepcific(blog.author.name,blog.slug)}>
                 <div className="relative">
                   <Image
                     src={blog.image}
