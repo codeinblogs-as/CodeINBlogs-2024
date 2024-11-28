@@ -17,6 +17,21 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar, ChevronDown, Layout, Mail, Plus, Trash, Upload, User, Users, FileText, Briefcase } from 'lucide-react'
 import useAdminRedirect from '@/components/userValidation'
 
+type Community = {
+    _id: string;
+    name: string;
+    communityImage: string;
+};
+
+type Event = {
+    _id: string;
+    eventImage: string;
+    eventName: string;
+    eventDescription: string;
+    eventDateTime: string;
+    eventType: string;
+};
+
 export default function ModernAdminDashboard() {
   useAdminRedirect();
   const [showNewUserModal, setShowNewUserModal] = useState(false)
@@ -32,12 +47,12 @@ export default function ModernAdminDashboard() {
     eventDateTime: "",
     eventType: "",
   });
-  const fileInputRef = useRef<HTMLInputElement | null>(null); 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
   const [partnerName, setPartnerName] = useState("");
-  const [uploadedImage, setUploadedImage] = useState(null); // For preview
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null); // Specify type for uploadedImage
   const [loading, setLoading] = useState(true);
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -75,7 +90,7 @@ export default function ModernAdminDashboard() {
   // Trigger hidden file input when clicking the visible upload button
   const triggerFileInput = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click();
+        fileInputRef.current.click();
     }
   };
 
@@ -152,17 +167,17 @@ export default function ModernAdminDashboard() {
     fetchCommunity();
   }, []);
 
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => setUploadedImage(reader.result); // Base64 string
+      reader.onload = () => setUploadedImage(reader.result as string); // Ensure type compatibility
       reader.readAsDataURL(file);
     }
   };
 
   // Submit the form data
-  const handleSubmitCommunity= async (e) => {
+  const handleSubmitCommunity = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!partnerName || !uploadedImage) {
@@ -190,7 +205,7 @@ export default function ModernAdminDashboard() {
   if (loading) return <p>Loading...</p>;
 
 
-  
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="bg-white shadow-sm">
@@ -206,7 +221,7 @@ export default function ModernAdminDashboard() {
       <main className="container mx-auto px-4 py-8 space-y-8">
         {/* Metrics */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <MetricCard title="Total Users" value={users.length} icon={<Users className="h-6 w-6" />} />
+          <MetricCard title="Total Users" value={String(users.length)} icon={<Users className="h-6 w-6" />} />
           <MetricCard title="Total Visits" value="1,234,567" icon={<Layout className="h-6 w-6" />} />
           <MetricCard title="Active Blogs" value="456" icon={<FileText className="h-6 w-6" />} />
         </section>
@@ -289,7 +304,7 @@ export default function ModernAdminDashboard() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                {users.map((user) => (
+                {users.map((user: { _id: string; createdAt: string; firstName: string; lastName: string; username: string; email: string; totalBlogs: number; accessLevel: string; }) => (
               <TableRow key={user._id}>
                 <TableCell>{user.createdAt}</TableCell>
                 <TableCell>{user.firstName}</TableCell>
@@ -451,12 +466,12 @@ export default function ModernAdminDashboard() {
         </div>
       </form>
       {message && <p className="mt-4 text-center text-sm text-gray-700">{message}</p>}
-                 
+
                 </DialogContent>
               </Dialog>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
+            {events.map((event: Event) => (
         <EventCard
           key={event._id}
           image={event.eventImage}
@@ -563,14 +578,14 @@ export default function ModernAdminDashboard() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
   {communities.map((community, index) => (
     <div key={index} className="rounded-lg shadow-md">
-      <Image 
+      <Image
         src={community.
           communityImage
-          } 
-        alt={community.name} 
-        width={200} 
-        height={100} 
-        className="rounded-lg shadow-md" 
+          }
+        alt={community.name}
+        width={200}
+        height={100}
+        className="rounded-lg shadow-md"
       />
       <p className="mt-2 text-center text-gray-700">{community.name}</p>
     </div>
@@ -611,7 +626,7 @@ function EventCard({ image, name, description, dateTime, type }: { image: string
         <Badge>{type}</Badge>
       </CardContent>
       <CardFooter className="bg-gray-50 border-t px-4 py-3">
-       
+
       </CardFooter>
     </Card>
   )
