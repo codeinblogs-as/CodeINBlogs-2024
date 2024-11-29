@@ -11,7 +11,7 @@ export default function AboutPage() {
                 {/* About Us Section */}
                 <section className="flex flex-col lg:flex-row items-center justify-between gap-10">
                     {/* Left Content */}
-                    <div className="lg:w-[55%] space-y-6">
+                    <div className="lg:w-[55%] space-y-6 border-l-4 border-[#1c0e44]/70 pl-6">
                         <span className="inline-block px-4 py-1 bg-blue-600/20 text-blue-400 rounded-full text-sm">
                             ABOUT US
                         </span>
@@ -58,7 +58,7 @@ export default function AboutPage() {
                     </div>
 
                     {/* Right side - Content */}
-                    <div className="lg:w-[55%] space-y-6">
+                    <div className="lg:w-[55%] space-y-6 border-r-4 border-[#1c0e44]/70 pr-6">
                         <span className="inline-block px-4 py-1 bg-blue-600/20 text-blue-400 rounded-full text-sm">
                             WHY CODEINBLOGS
                         </span>
@@ -67,12 +67,11 @@ export default function AboutPage() {
                             Democratizing Access To Coding Resources
                         </h2>
 
-                        <div className="relative pl-6">
-                            <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-purple-500 to-blue-500" />
-                            <p className="text-gray-400 text-lg">
+
+                            <p className="text-gray-400 text-lg ">
                                 Discover why CodeINBlogs is the preferred choice for developers seeking to enhance their skills and connect with like-minded individuals. Join our platform to access high-quality coding tutorials, collaborative projects, and expert mentorship, all in one place.
                             </p>
-                        </div>
+
 
                         <GradientButton href="/coding-resources" text="Coding Resources  " />
                     </div>
@@ -81,19 +80,18 @@ export default function AboutPage() {
                 {/* Founder Section */}
                 <section className="flex flex-col lg:flex-row items-center justify-between gap-10">
                     {/* Left Content */}
-                    <div className="lg:w-[55%] space-y-6">
+                    <div className="lg:w-[55%] space-y-6 border-l-4 border-[#1c0e44]/70 pl-6">
                         <span className="inline-block px-4 py-1 bg-blue-600/20 text-blue-400 rounded-full text-sm">
                             WHO FOUNDED
                         </span>
                         <h2 className="text-white text-3xl font-bold leading-tight">
                             Meet Our Founder, Anshul Soni
                         </h2>
-                        <div className="relative pl-6">
-                            <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-purple-500 to-blue-500" />
+
                             <p className="text-gray-400 text-lg">
                                 Get to know Anshul Soni, the visionary founder behind CodeINBlogs. As a young entrepreneur and full-stack developer, Anshul's passion for technology and commitment to fostering learning have shaped CodeINBlogs into a vibrant community hub for developers of all ages.
                             </p>
-                        </div>
+
 
                         <GradientButton href="/about-founder" text="Meet Our Founder" />
                     </div>
