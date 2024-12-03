@@ -43,6 +43,7 @@ export default function BlogsSection() {
         const data = await response.json();
 
         const formattedData = data.map((post: any) => ({
+          _id:post._id,
           title: post.title,
           content: post.content,
           category: post.tags[0] || 'Uncategorized',
@@ -64,6 +65,11 @@ export default function BlogsSection() {
     fetchBlogs();
   }, []);
 
+  const redirectToSepcific = async (blogname:string,blogslug: string) => {
+    console.log("Ad");
+    router.push(`/allBlogs/${blogname}/${blogslug}`);
+  };
+
   return (
     <section
       id="Blogs"
@@ -84,9 +90,9 @@ export default function BlogsSection() {
         </div>
         <ul className="mx-auto grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 mt-8 lg:max-w-none lg:grid-cols-3">
           {blogs.slice(0, 3).map((blog, index) => (
-            <li key={index}>
-              <figure className="relative rounded-2xl bg-black/60 transform-gpu [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl">
-                <div className="relative">
+            <li key={blog._id}>
+              <figure  className="relative rounded-2xl bg-black/60 transform-gpu [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#8686f01f_inset] p-6 shadow-xl">
+                <div className="relative" onClick={() => redirectToSepcific(blog.author.name, blog._id)}>
                   <Image
                     src={blog.image}
                     alt={blog.title}

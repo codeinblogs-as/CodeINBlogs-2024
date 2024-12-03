@@ -7,7 +7,7 @@ import UserBlogs from '@/components/UserBlog'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Mail, Calendar, FileText, LogOut, ArrowLeft } from 'lucide-react'
+import { Mail, Calendar, FileText, LogOut, ArrowLeft, Share } from 'lucide-react'
 import CodeINBlogsBanner from "./CodeINBlogs.png"
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,7 +17,7 @@ const ProfilePage = () => {
     const { profile, logOut } = useAuth()
     const [blogCount, setBlogCount] = useState<number>(0)
     const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
-
+    const [shareUrl, setShareUrl] = useState('');
     useEffect(() => {
         const fetchBlogCount = async () => {
             if (profile) {
@@ -38,6 +38,23 @@ const ProfilePage = () => {
         }, 1000)
     }
 
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: `Check out ${profile.firstName}'s profile!`,
+                    text: `Take a look at ${profile.firstName}'s profile on our platform.`,
+                    url: `${window.location.origin}/userProfile/${profile.username}`,
+                });
+            } catch (error) {
+                console.error('Error sharing:', error);
+            }
+        } else {
+            // Fallback to copying the URL to clipboard
+            navigator.clipboard.writeText(shareUrl);
+            alert('Profile URL copied to clipboard!');
+        }
+    };
     if (!profile && !isLoggingOut) return (
         <div className="flex justify-center items-center h-screen bg-black text-white">
             <p className="text-lg">Loading...</p>
@@ -106,6 +123,10 @@ const ProfilePage = () => {
                                             <div className="flex items-center justify-center md:justify-start gap-2 text-zinc-400">
                                                 <FileText className="h-4 w-4" />
                                                 <span>Total Blogs Written: {blogCount}</span>
+                                            </div>
+                                            <div className="flex items-center justify-center md:justify-start gap-2 text-zinc-400" onClick={handleShare}>
+                                                <Share className="h-4 w-4" />
+                                                <span>Share Profile</span>
                                             </div>
                                         </div>
                                     </div>
